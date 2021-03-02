@@ -22,6 +22,9 @@ def load_econ(data_loc):
     # add trailing / if needed
     if data_loc[-1] != "/": data_loc += "/"
 
+    # create DB if not there
+    cu.run_query("CREATE DATABASE IF NOT EXISTS econ", client)
+
     # Load up msa-level data
     cu.run_query("DROP TABLE IF EXISTS econ.unemp_msa_raw", client)
     cu.run_query(sql_loc + "unemp_raw_ct.sql", client, True, "XXXXX", "unemp_msa_raw")

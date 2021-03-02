@@ -9,6 +9,9 @@ def load_fannie(data_loc):
     # add trailing / if needed
     if data_loc[-1] != "/": data_loc += "/"
 
+    # create DB if not there
+    cu.run_query("CREATE DATABASE IF NOT EXISTS fannie", client)
+
     # load harp_map table which maps non-harp loans to their harp refis
     cu.run_query("DROP TABLE IF EXISTS fannie.harp_map", client)
     cu.run_query(sql_loc + "harp_map_ct.sql", client, True)

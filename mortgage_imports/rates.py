@@ -8,12 +8,15 @@ will@invertedv.com
 """
 
 
-def load_econ(data_loc):
+def load_rates(data_loc):
     client = cu.make_connection()
     sql_loc = pkg_resources.resource_filename('mortgage_imports', 'sql/rates') + '/'
     
     # add trailing / if needed
     if data_loc[-1] != "/": data_loc += "/"
+
+    # create DB if not there
+    cu.run_query("CREATE DATABASE IF NOT EXISTS rates", client)
 
     # rates that are recorded weekly
     cu.run_query("DROP TABLE IF EXISTS rates.weekly_raw", client)
@@ -31,6 +34,3 @@ def load_econ(data_loc):
     cu.run_query("DROP TABLE IF EXISTS rates.monthly", client)
     cu.run_query(sql_loc + "joined_ct.sql", client, True)
     cu.run_query(sql_loc + "joined_ins.sql", client, True)
-
-
-load_econ("/mnt/driveb/rates_data")

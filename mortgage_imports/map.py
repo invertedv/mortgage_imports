@@ -24,6 +24,9 @@ def load_map(data_loc):
     # add trailing / if needed
     if data_loc[-1] != "/": data_loc += "/"
 
+    # create DB if not there
+    cu.run_query("CREATE DATABASE IF NOT EXISTS map", client)
+
     # import table that maps from state postal name to fips ID
     cu.run_query("DROP TABLE IF EXISTS map.st_cd_raw", client)
     cu.run_query(sql_loc + "state_cd_raw_ct.sql", client, True)
@@ -76,5 +79,3 @@ def load_map(data_loc):
     cu.run_query(sql_loc + "zip_cty_ins.sql", client, True)
     cu.run_query("DROP TABLE IF EXISTS map.zip_cty_raw", client)
 
-
-load_map("/mnt/driveb/map_data")
