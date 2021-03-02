@@ -7,6 +7,7 @@ setup(
     url='',
     install_requires=['clickhouse-driver', 'numpy', 'pandas'],
     package_data={'mortgage_imports': ['sql/*']},
+    include_package_data=True,
     license='MIT',
     author='Will Alexander',
     author_email='will@InvertedV.com',
