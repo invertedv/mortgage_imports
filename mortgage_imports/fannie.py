@@ -23,7 +23,7 @@ def load_fannie(data_loc):
     fn = 0
 
     # we want the HARP file to be the first file read (it's the biggest so thought we'd start there)
-    for filename in sorted(flist, reverse=False):
+    for filename in sorted(flist, reverse=True):
         if (filename[0] == "2") or (filename == "HARPLPPub.csv"):
             print("working on {0}".format(filename))
             src_file = filename[0:filename.find(".")]
@@ -47,15 +47,12 @@ def load_fannie(data_loc):
             cu.run_query("DROP TABLE IF EXISTS fannie.with_hpi", client)
             if first:
                 first = False
-                cu.run_query("DROP TABLE IF EXISTS fannie.final1", client)
+                cu.run_query("DROP TABLE IF EXISTS fannie.final", client)
                 cu.run_query(sql_loc + "final_ct.sql", client, True)
             cu.run_query(sql_loc + "final_ins.sql", client, True)
             cu.run_query("DROP TABLE IF EXISTS fannie.n3sted", client)
             print("done: {0}".format(filename))
-            break
         fn += 1
 
     print("Processed {0} files".format(fn))
 
-
-load_fannie("/mnt/driveb/fannie_csv")

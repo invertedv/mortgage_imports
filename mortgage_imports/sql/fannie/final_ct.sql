@@ -1,4 +1,4 @@
-CREATE TABLE fannie.final1 (
+CREATE TABLE fannie.final (
   harp_status  LowCardinality(String),
   harp_ln_id LowCardinality(String),
 
