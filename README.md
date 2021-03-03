@@ -107,3 +107,40 @@ This data is downloaded directly from [fannie](https://capitalmarkets.fanniemae.
 
 There is no pre-processing other than unzipping the files.
 
+### Databases and Tables
+
+The following are created by this package:
+
+- **fhfa** database
+  - *msad*  HPI at MSA/division level
+  - *state* HPI at the state level
+  - *state_non_msa* HPI at state level excluding msas
+  - *zip3* HPI at the zip3 level
+  - *msad_map* map of MSA/division to their name  
+    
+- **rates** database
+  - *daily_raw* daily interest rates, as read in
+  - *weekly_raw* weekly interest rates, as read in
+  - *monthly* monthly rates, constructed by averaging the values in the
+    first two tables
+    
+- **econ** database
+  - *unemp_cbsa* unemployment at the CBSA level
+  - *unemp_cbsad* unemployment at the CBSA/Division level
+  - *unemp_micro* unemployment at the micropolitan level
+  - *unemp_msa* unemployment at the MSA level
+  - *unemp_msa* unemployment at the MSA/Division level
+  - *unemp_state* unemployment at the State level.
+    
+- **map** database
+  - *st_cd* State FIPS codes
+  - *zip_cbsa* Zip to CBSA code map
+  - *zip_cbsad* Zip to CBSA/Division code map
+  - *zip_cty* Zip to county FIPs code map.
+    
+- **fannie** database
+  - *final* Fannie loan-level dataset annotated with HPI, rates
+    and unemployment.
+  
+  The 3-digit Zip FHFA HPI is used
+    

@@ -37,7 +37,7 @@ INSERT INTO fannie.n3sted
     max(ln_rprch_dt) AS ln_rprch_dt,
     max(ln_frgv_amt) AS ln_frgv_amt,
     max(ln_mi_type_cd) AS ln_mi_type_cd,
-    max(ln_c_credit_loss) AS ln_c_credit_loss,
+
     max(ln_t_credit_loss) AS ln_t_credit_loss,
     max(ln_hrprog_flg) AS ln_hrprog_flg,
     max(ln_zb_chg_dt) AS ln_zb_chg_dt,
@@ -66,8 +66,6 @@ INSERT INTO fannie.n3sted
     max(borr_first_time_flg) AS borr_first_time_flg,
     max(borr_iss_fico) AS borr_iss_fico,
     max(coborr_iss_fico) AS coborr_iss_fico,
-    max(borr_asst_plan) AS borr_asst_plan,
-    max(borr_hltv_refi_opt_flg) AS borr_hltv_refi_op_flg,
     max(borr_relo_flg) AS borr_relo_flg,
 
     max(arm_io_flg) AS arm_io_flg,
@@ -110,6 +108,9 @@ INSERT INTO fannie.n3sted
     groupArray(toInt8OrNull(ln_dq_status_cd) IS NULL ? -1 : toInt8OrNull(ln_dq_status_cd)),
 
     groupArray(ln_mod_flg),
+    groupArray(borr_asst_plan),
+    groupArray(borr_hltv_refi_opt_flg),
+
     groupArray(serv_name),
     groupArray(serv_activity_flg),
     groupArray(mserv_name),

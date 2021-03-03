@@ -1,4 +1,4 @@
-CREATE TABLE fannie.final1 (
+CREATE TABLE fannie.final (
   harp_status  LowCardinality(String),
   harp_ln_id LowCardinality(String),
 
@@ -36,7 +36,7 @@ CREATE TABLE fannie.final1 (
   ln_rprch_dt Nullable(Date),
   ln_frgv_amt Float32,
   ln_mi_type_cd LowCardinality(FixedString(1)),
-  ln_c_credit_loss Float32,
+
   ln_t_credit_loss Float32,
   ln_hrprog_flg LowCardinality(FixedString(1)),
   ln_zb_chg_dt Nullable(Date),
@@ -65,8 +65,7 @@ CREATE TABLE fannie.final1 (
   borr_first_time_flg LowCardinality(FixedString(1)),
   borr_iss_fico Int16,
   coborr_iss_fico Int16,
-  borr_asst_plan LowCardinality(FixedString(1)),
-  borr_hltv_refi_opt_flg LowCardinality(FixedString(1)),
+
   borr_relo_flg LowCardinality(FixedString(1)),
 
   arm_io_flg LowCardinality(FixedString(1)),
@@ -109,6 +108,9 @@ CREATE TABLE fannie.final1 (
     months_dq Int8,
 
     mod_flg LowCardinality(FixedString(1)),
+    borr_asst_plan LowCardinality(FixedString(1)),
+    borr_hltv_refi_opt_flg LowCardinality(FixedString(1)),
+
     serv_name LowCardinality(String),
     serv_activity_flg LowCardinality(FixedString(1)),
     mserv_name LowCardinality(String),
