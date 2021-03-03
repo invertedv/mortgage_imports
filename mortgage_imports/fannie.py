@@ -50,12 +50,12 @@ def load_fannie(data_loc):
             cu.run_query("DROP TABLE IF EXISTS fannie.with_hpi", client)
             if first:
                 first = False
-                cu.run_query("DROP TABLE IF EXISTS fannie.final", client)
+                cu.run_query("DROP TABLE IF EXISTS fannie.final1", client)
                 cu.run_query(sql_loc + "final_ct.sql", client, True)
             cu.run_query(sql_loc + "final_ins.sql", client, True)
             cu.run_query("DROP TABLE IF EXISTS fannie.n3sted", client)
             print("done: {0}".format(filename))
-        fn += 1
+            fn += 1
 
     print("Processed {0} files".format(fn))
 

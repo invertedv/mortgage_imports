@@ -9,7 +9,9 @@ CREATE TABLE fannie.n3sted (
   last_dt Date,
   last_upb Float32,
   last_dq_status_cd LowCardinality(FixedString(2)),
-  last_pay_str LowCardinality(String),  
+  last_pay_str LowCardinality(String),
+  last_zb_cd LowCardinality(FixedString(3)),
+  last_months_dq Int8,
 
   ln_orig_ir Float32,
   ln_orig_prin Float32,
@@ -25,7 +27,7 @@ CREATE TABLE fannie.n3sted (
   ln_pp_pen_flg LowCardinality(FixedString(1)),
   ln_amort_months Int16,
   ln_mi_can_flg LowCardinality(FixedString(2)),
-  ln_zb_cd LowCardinality(FixedString(3)),
+
   ln_zb_dt Nullable(Date),
   ln_remvd_prin Float32,
   ln_rprch_dt Nullable(Date),
@@ -100,6 +102,9 @@ CREATE TABLE fannie.n3sted (
     last_pay_dt Date,
     borr_c_fico Int16,
     coborr_c_fico Int16,
+    zb_cd LowCardinality(FixedString(3)),
+    months_dq Int8,
+
     mod_flg LowCardinality(FixedString(1)),
     serv_name LowCardinality(String),
     serv_activity_flg LowCardinality(FixedString(1)),

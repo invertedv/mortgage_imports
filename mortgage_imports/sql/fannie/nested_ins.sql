@@ -13,6 +13,9 @@ INSERT INTO fannie.n3sted
     arrayElement(groupArray(ln_c_prin1), length(groupArray(dt))) AS last_upb,
     arrayElement(groupArray(ln_dq_status_cd), length(groupArray(dt))) AS last_dq_status_cd,
     arrayElement(groupArray(ln_pay_hist_str), length(groupArray(dt))) AS last_pay_str,
+    arrayElement(groupArray(ln_zb_cd), length(groupArray(dt))) AS last_zb_cd,
+    toInt8OrNull(arrayElement(groupArray(ln_dq_status_cd), length(groupArray(dt)))) IS NULL ? -1 :
+      toInt8OrNull(arrayElement(groupArray(ln_dq_status_cd), length(groupArray(dt)))) AS last_months_dq,
 
     max(ln_orig_ir) AS ln_orig_ir,
     max(ln_orig_prin1) AS ln_orig_prin,
@@ -28,7 +31,7 @@ INSERT INTO fannie.n3sted
     max(ln_pp_pen_flg) AS ln_pp_pen_flg,
     max(ln_amort_months) AS ln_amort_months,
     max(ln_mi_can_flg) AS ln_mi_can_flg,
-    max(ln_zb_cd) AS ln_zb_cd,
+
     max(ln_zb_dt) AS ln_zb_dt,
     max(ln_remvd_prin) AS ln_remvd_prin,
     max(ln_rprch_dt) AS ln_rprch_dt,
@@ -102,6 +105,10 @@ INSERT INTO fannie.n3sted
     groupArray(ln_last_pay_dt),
     groupArray(borr_c_fico),
     groupArray(coborr_c_fico),
+
+    groupArray(ln_zb_cd),
+    groupArray(toInt8OrNull(ln_dq_status_cd) IS NULL ? -1 : toInt8OrNull(ln_dq_status_cd)),
+
     groupArray(ln_mod_flg),
     groupArray(serv_name),
     groupArray(serv_activity_flg),

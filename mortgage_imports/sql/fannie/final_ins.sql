@@ -1,4 +1,4 @@
-INSERT INTO fannie.final
+INSERT INTO fannie.final1
   SELECT
     multiIf(b.old_ln_id != '', 'To HARP',
            c.old_ln_id != '', 'Is HARP',
