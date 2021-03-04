@@ -41,8 +41,8 @@ joining the two tables.
 Clickhouse offers an alternative as it supports nesting. The final mortgage table has
 one row per loan with the monthly values nested within it. Conceptually, 
 nesting is like embedding a table in each row. The monthly values can be accessed either as
-arrays or via ARRAY JOIN the table can effectively be expanded from 1 one row per loan
-1 loan-month per row.
+arrays or using ARRAY JOIN the table is effectively be expanded from one row per loan
+to one loan-month per row.
 
 Further, multiple nested arrays are permitted. The mortgage table has a nested array
 for monthly data, months where there is modification activity and months where there is
