@@ -18,6 +18,38 @@ The types of data created are:
 Separate databases of the first four a created. The final Fannie database
 is augmented with annotations based on these tables.
 
+### Why Clickhouse
+
+As the clickhouse [website](https://clickhouse.tech/docs/en/) points out, the database is designed
+for OLAP (online analytical processing). Specifically, it is good for applications where
+the data itself is not frequently updated, queries involve few joins (and if there are, one table is 
+much bigger than others) or no joins, and not many columns but perhaps many
+rows are returned by queries.
+
+Mortgage data inherently have fields that (a) don't ever change, such as original loan
+amount and (b) that change every month, such as current loan amount. Typically, there are
+two ways to deal with this:
+
+1. One Table. In this approach, there is one row for each month for each loan. 
+   The unchanging fields are repeated every month.
+2. Two Table. In this approach, there is a table for the unchanging fields and another
+   for the fields that change monthly.
+   
+The first approach wastes a lot of space.  In the second approach, one will forever be
+joining the two tables.
+
+Clickhouse offers an alternative as it supports nesting. The final mortgage table has
+one row per loan with the monthly values nested within it. Conceptually, 
+nesting is like embedding a table in each row. The monthly values can be accessed either as
+arrays or via ARRAY JOIN the table can effectively be expanded from 1 one row per loan
+1 loan-month per row.
+
+Further, multiple nested arrays are permitted. The mortgage table has a nested array
+for monthly data, months where there is modification activity and months where there is
+foreclosure activity. The latter two are null for most loans and only populated 
+where needed for the rest.
+
+
 ### Data Sources and pre-processing
 
 **FHFA**
@@ -25,7 +57,7 @@ The data is downloaded from [here](https://www.fhfa.gov/DataTools/Downloads/Page
 The series needed are:
 
 - 3-digit zip (HPI_AT_3zip.xls)
-- MSADiv level (HPI_AT_metro.csv)
+- MSA/Division level (HPI_AT_metro.csv)
 - Non-metro area (HPI_AT_nonmetro.csv)
 - State (HPI_AT_state.csv)
 
@@ -101,7 +133,7 @@ retained in the final table. The input data also includes the percent
 of addresses in the zip/cbsa intersection which are residential. This is
 also retained in the CBSA tables.
 
-** Fannie Data**
+**Fannie Data**
 
 This data is downloaded directly from [fannie](https://capitalmarkets.fanniemae.com/credit-risk-transfer/single-family-credit-risk-transfer/fannie-mae-single-family-loan-performance-data)
 
@@ -144,3 +176,5 @@ The following are created by this package:
   
   The 3-digit Zip FHFA HPI is used
     
+  Note: the fields and descriptions of this database are in the GitHub 
+  repo [here](https://github.com/invertedv/mortgage_imports/blob/main/fannie_final_fields.ods)
