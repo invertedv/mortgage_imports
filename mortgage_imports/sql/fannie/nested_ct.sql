@@ -45,7 +45,7 @@ CREATE TABLE fannie.n3sted (
   ln_defrl_amt Float32,
 
   prop_type_cd LowCardinality(FixedString(2)),
-  prop_num_unit Float32,
+  prop_num_unit Int16,
   prop_occ_cd LowCardinality(FixedString(1)),
   prop_st LowCardinality(FixedString(2)),
   prop_msa_cd LowCardinality(FixedString(5)),
