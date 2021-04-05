@@ -92,3 +92,5 @@ def load_econ(data_loc):
     cu.run_query(sql_loc + "unemp_cbsa_ins.sql", client, True, ["XXXXX", "YYYYY", "ZZZZZ", "TTTTT"],
               ["unemp_cbsad", "prop_cbsad_cd", "prop_msad_cd", "econ.unemp_msad"])
 
+
+load_econ("/mnt/driveb/econ_data")

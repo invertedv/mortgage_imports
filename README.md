@@ -103,6 +103,8 @@ is pulled directly from the BLS.
 - The state data is from [here](https://download.bls.gov/pub/time.series/la/la.data.3.AllStatesS)
 - The micropolitan data is [here](https://download.bls.gov/pub/time.series/la/la.data.62.Micro)
 
+Documentation is [here](https://download.bls.gov/pub/time.series/la/la.txt)
+
 After the files are downloaded:
 
 - Delete the header row
