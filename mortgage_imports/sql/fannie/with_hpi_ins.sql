@@ -1,8 +1,8 @@
 INSERT INTO fannie.with_hpi
 SELECT
   a.*,
-  b.fhfa_zip3,
   c.fhfa_zip3,
+  b.fhfa_zip3,
   d.rt_mort15yr,
   d.rt_mort30yr,
   d.rt_mortarm5,

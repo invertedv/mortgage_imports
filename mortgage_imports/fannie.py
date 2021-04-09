@@ -56,6 +56,5 @@ def load_fannie(data_loc):
             cu.run_query("DROP TABLE IF EXISTS fannie.n3sted", client)
             print("done: {0}".format(filename))
             fn += 1
-
     print("Processed {0} files".format(fn))
 

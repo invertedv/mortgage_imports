@@ -22,7 +22,7 @@ INSERT INTO fannie.trans
     ln_rem_term_act,
     toDate(concat(substr(ln_mat_dt = '' ? '011970' : ln_mat_dt, 3, 4), '-', substr(ln_mat_dt = '' ? '011970' : ln_mat_dt, 1, 2), '-01')) AS ln_mat_dt,
     ln_orig_ltv,
-    ln_orig_cltv,
+    ln_orig_cltv < ln_orig_ltv ? ln_orig_ltv : ln_orig_cltv,
     borr_num,
     borr_dti,
     borr_orig_fico,

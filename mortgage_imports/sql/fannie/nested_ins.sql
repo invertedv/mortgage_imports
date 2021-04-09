@@ -105,7 +105,7 @@ INSERT INTO fannie.n3sted
     groupArray(coborr_c_fico),
 
     groupArray(ln_zb_cd),
-    groupArray(toInt8OrNull(ln_dq_status_cd) IS NULL ? -1 : toInt8OrNull(ln_dq_status_cd)),
+    groupArray(toInt8OrNull(ln_dq_status_cd) IS NULL ? 0 : toInt8OrNull(ln_dq_status_cd)),
 
     groupArray(ln_mod_flg),
     groupArray(borr_asst_plan),
@@ -115,9 +115,14 @@ INSERT INTO fannie.n3sted
     groupArray(serv_activity_flg),
     groupArray(mserv_name),
     groupArray(prop_dt_hpi1),
-    groupArray(ln_orig_ltv1 > 0 ? (prop_orig_hpi1 / prop_dt_hpi1) * ln_orig_prin1 / (ln_orig_ltv1 / 100.0) : 0.0),
-    groupArray(ln_orig_ltv1 > 0 AND ln_c_prin1 > 0 ? 100.0 * ln_c_prin1 / (ln_orig_prin1 / (ln_orig_ltv1 / 100.0)) : 0.0),
-    groupArray(ln_orig_ltv1 > 0 ? (prop_orig_hpi1 / prop_dt_hpi1) * ln_orig_prin1 / (ln_orig_ltv1 / 100.0) - ln_c_prin1 : 0.0),
+    /* updated property value */
+    /* ln_orig_prin1 / (ln_orig_ltv1 / 100.0) is original property value */
+    groupArray(ln_orig_ltv1 > 0 AND prop_dt_hpi1 > 0 ? (prop_dt_hpi1 / prop_orig_hpi1) * ln_orig_prin1 / (ln_orig_ltv1 / 100.0) : 0.0),
+    /* updated ltv */
+    groupArray(ln_orig_ltv1 > 0 AND prop_dt_hpi1 > 0 ? 100.0 * ln_c_prin1 / ((prop_dt_hpi1 / prop_orig_hpi1) * ln_orig_prin1 / (ln_orig_ltv1 / 100.0)) : 0.0),
+    /* updated 1st lien equity */
+    groupArray(ln_orig_ltv1 > 0 AND prop_dt_hpi1 > 0 ? (prop_dt_hpi1 / prop_orig_hpi1) * ln_orig_prin1 / (ln_orig_ltv1 / 100.0) - ln_c_prin1 : 0.0),
+
     groupArray(rt_mort15yr),
     groupArray(rt_mort30yr),
     groupArray(rt_mortarm5),
