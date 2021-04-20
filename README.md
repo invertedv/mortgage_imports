@@ -176,7 +176,11 @@ The following are created by this package:
   - *final* Fannie loan-level dataset annotated with HPI, rates
     and unemployment.
   
-  The 3-digit Zip FHFA HPI is used
-    
+    The 3-digit Zip FHFA HPI is used
+
+- **aux** database
+  - *fctimes* Fannie Mae foreclosure timelines. These are available [here](https://singlefamily.fanniemae.com/media/6726/display)
+
+
   Note: the fields and descriptions of this database are in the GitHub 
   repo [here](https://github.com/invertedv/mortgage_imports/blob/main/fannie_final_fields.ods)
