@@ -13,15 +13,19 @@ INSERT INTO fannie.trans
     ln_iss_prin,
     ln_c_prin = 0 AND ln_zb_cd = '!' ? ln_orig_prin : ln_c_prin,
     ln_orig_term,
+    /* clickhouse always evaluates both legs of the IF so you have to do the ='' on both sides */
     ln_orig_dt = '' ? NULL :
-      toDate(concat(substr(ln_orig_dt = '' ? '011970' : ln_orig_dt, 3, 4), '-', substr(ln_orig_dt = '' ? '011970' : ln_orig_dt, 1, 2), '-01')) AS ln_orig_dt,
+      toDate(concat(substr(ln_orig_dt = '' ? '011970' : ln_orig_dt, 3, 4), '-',
+      substr(ln_orig_dt = '' ? '011970' : ln_orig_dt, 1, 2), '-01')) AS ln_orig_dt,
     ln_fp_dt = '' ? NULL :
-      toDate(concat(substr(ln_fp_dt = '' ? '011970' : ln_fp_dt, 3, 4), '-', substr(ln_fp_dt = '' ? '011970' : ln_fp_dt, 1, 2), '-01')) AS ln_fp_dt,
+      toDate(concat(substr(ln_fp_dt = '' ? '011970' : ln_fp_dt, 3, 4), '-',
+      substr(ln_fp_dt = '' ? '011970' : ln_fp_dt, 1, 2), '-01')) AS ln_fp_dt,
 /*    ln_age,*/
-    dateDiff('month', toStartOfMonth(ln_fp_dt), dt),
+    ln_fp_dt IS NULL ? -1 : dateDiff('month', toStartOfMonth(ln_fp_dt), dt),
     ln_rem_term_legal,
     ln_rem_term_act,
-    toDate(concat(substr(ln_mat_dt = '' ? '011970' : ln_mat_dt, 3, 4), '-', substr(ln_mat_dt = '' ? '011970' : ln_mat_dt, 1, 2), '-01')) AS ln_mat_dt,
+    toDate(concat(substr(ln_mat_dt = '' ? '011970' : ln_mat_dt, 3, 4), '-',
+      substr(ln_mat_dt = '' ? '011970' : ln_mat_dt, 1, 2), '-01')) AS ln_mat_dt,
     ln_orig_ltv,
     ln_orig_cltv < ln_orig_ltv ? ln_orig_ltv : ln_orig_cltv,
     borr_num,
