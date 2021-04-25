@@ -8,5 +8,5 @@ FROM
 WHERE
   substr(id, 20, 1) = '3'
   /* there are two msas with both U and S here */
-  AND substr(id, 3, 1) != 'S'
+  ZZZZ
 

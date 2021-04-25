@@ -32,7 +32,7 @@ def load_econ(data_loc):
     cu.run_query("DROP TABLE IF EXISTS econ.unemp_msa", client)
     cu.run_query(sql_loc + "unemp_ct.sql", client, True, ["XXXXX", "YYYYY", "ZZZZZ"],
               ["unemp_msa", "prop_msa_cd", "LowCardinality(FixedString(5))"])
-    cu.run_query(sql_loc + "unemp_ins.sql", client, True, ["XXXXX", "YYYYY"], ["unemp_msa", "substr(id, 8, 5)"])
+    cu.run_query(sql_loc + "unemp_ins.sql", client, True, ["XXXXX", "YYYYY", "ZZZZ"], ["unemp_msa", "substr(id, 8, 5)", "AND substr(id, 3, 1) != 'S'"])
     cu.run_query("DROP TABLE IF EXISTS econ.unemp_msa_raw", client)
     
     # Load up msa division data (this is *only* divisions)
@@ -42,7 +42,8 @@ def load_econ(data_loc):
     cu.run_query("DROP TABLE IF EXISTS econ.unemp_msad0", client)
     cu.run_query(sql_loc + "unemp_ct.sql", client, True, ["XXXXX", "YYYYY", "ZZZZZ"],
               ["unemp_msad0", "prop_msad_cd", "LowCardinality(FixedString(5))"])
-    cu.run_query(sql_loc + "unemp_ins.sql", client, True, ["XXXXX", "YYYYY"], ["unemp_msad0", "substr(id, 8, 5)"])
+    cu.run_query(sql_loc + "unemp_ins.sql", client, True, ["XXXXX", "YYYYY", "ZZZZ"],
+                 ["unemp_msad0", "substr(id, 8, 5)", "AND substr(id, 3, 1) != 'S'"])
     cu.run_query("DROP TABLE IF EXISTS econ.unemp_msad0_raw", client)
     
     # the above is ONLY divisions -- so we need to add the MSAs that don't have divisions
@@ -59,7 +60,8 @@ def load_econ(data_loc):
     cu.run_query("DROP TABLE IF EXISTS econ.unemp_micro", client)
     cu.run_query(sql_loc + "unemp_ct.sql", client, True, ["XXXXX", "YYYYY", "ZZZZZ"],
               ["unemp_micro", "prop_micro_cd", "LowCardinality(FixedString(5))"])
-    cu.run_query(sql_loc + "unemp_ins.sql", client, True, ["XXXXX", "YYYYY"], ["unemp_micro", "substr(id, 8, 5)"])
+    cu.run_query(sql_loc + "unemp_ins.sql", client, True, ["XXXXX", "YYYYY", "ZZZZ"],
+                 ["unemp_micro", "substr(id, 8, 5)", "AND substr(id, 3, 1) != 'S'"])
     cu.run_query("DROP TABLE IF EXISTS econ.unemp_micro_raw", client)
 
     # Load up state-level data
@@ -69,7 +71,8 @@ def load_econ(data_loc):
     cu.run_query("DROP TABLE IF EXISTS econ.unemp_state0", client)
     cu.run_query(sql_loc + "unemp_ct.sql", client, True, ["XXXXX", "YYYYY", "ZZZZZ"],
               ["unemp_state0", "prop_st_cd", "LowCardinality(FixedString(2))"])
-    cu.run_query(sql_loc + "unemp_ins.sql", client, True, ["XXXXX", "YYYYY"], ["unemp_state0", "substr(id, 6, 2)"])
+    cu.run_query(sql_loc + "unemp_ins.sql", client, True, ["XXXXX", "YYYYY", "ZZZZ"],
+                 ["unemp_state0", "substr(id, 6, 2)", ""])
     cu.run_query("DROP TABLE IF EXISTS econ.unemp_state0_raw", client)
 
     # fold in the state postal code

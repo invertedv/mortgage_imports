@@ -17,7 +17,7 @@ SELECT
   f.rt_libor12mo,
   f.rt_libor1mo,
   f.rt_libor3mo,
-  e.unemp_rate
+  ue1.unemp_rate = 0 ? ue2.unemp_rate : ue1.unemp_rate
 FROM
   fannie.trans AS a
 LEFT JOIN
@@ -36,28 +36,16 @@ LEFT JOIN
   rates.monthly AS d
 ON
   d.dt = a.dt
-LEFT JOIN (
-  SELECT
-    dt,
-    id,
-    unemp_rate
-  FROM ((
-    SELECT
-      dt,
-      prop_msa_cd AS id,
-      unemp_rate
-    FROM
-      econ.unemp_msa)
-    UNION ALL (
-      SELECT
-        dt,
-        cast(prop_st AS FixedString(5)) AS id,
-        unemp_rate
-      FROM
-        econ.unemp_state))) AS e
+LEFT JOIN
+  econ.unemp_msa as ue1
 ON
-  e.dt = a.dt
-  AND e.id = IF(a.prop_msa_cd='00000', cast(a.prop_st AS FixedString(5)), prop_msa_cd)
+  ue1.dt = a.dt
+  AND a.prop_msa_cd = ue1.prop_msa_cd
+LEFT JOIN
+  econ.unemp_state as ue2
+ON
+  ue2.dt = a.dt
+  AND a.prop_st = ue2.prop_st
 LEFT JOIN
   rates.monthly AS f
 ON
