@@ -34,3 +34,5 @@ def load_rates(data_loc):
     cu.run_query("DROP TABLE IF EXISTS rates.monthly", client)
     cu.run_query(sql_loc + "joined_ct.sql", client, True)
     cu.run_query(sql_loc + "joined_ins.sql", client, True)
+
+    client.disconnect()

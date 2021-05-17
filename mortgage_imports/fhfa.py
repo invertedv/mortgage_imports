@@ -51,5 +51,7 @@ def load_fhfa(data_loc):
     cu.run_query("DROP TABLE IF EXISTS fhfa.zip3", client)
     cu.run_query(sql_loc + "zip3_ct.sql", client, True)
     cu.import_flat_file("fhfa.zip3", data_loc + "HPI_AT_3zip.csv", delim=",")
+    
+    client.disconnect()
 
 

@@ -24,4 +24,4 @@ def load_fctimes(data_loc):
     cu.import_flat_file("aux.fctimes", data_loc + "fc_timelines.csv",delim=',',
                         format="CSV")
     
-
+    client.disconnect()

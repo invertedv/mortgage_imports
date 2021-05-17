@@ -3,6 +3,7 @@ CREATE TABLE fannie.final (
   harp_ln_id LowCardinality(String),
 
   ln_id String,
+  ln_bucket Int8,
   vintage LowCardinality(String),
   src_file LowCardinality(String),
   deal_id LowCardinality(String),

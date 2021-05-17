@@ -1,6 +1,7 @@
 INSERT INTO fannie.n3sted
   SELECT
     ln_id String,
+    toInt8(toInt8(substr(ln_id, length(ln_id)-1, 2)) / 5) AS ln_bucket,
     ln_orig_dt IS NOT NULL ?
       concat(cast(toYear(ln_orig_dt) AS String),'Q',
         cast(toQuarter(ln_orig_dt) AS String)) : 'Missing' AS vintage,
@@ -158,4 +159,4 @@ INSERT INTO fannie.n3sted
     groupArray(arm_next_ir_adj_dt IS NOT NULL or arm_next_pay_adj_dt IS NOT NULL ? (arm_next_pay_adj_dt IS NOT NULL ? arm_next_pay_adj_dt : toDate('1970-01-01')) : NULL)
   FROM
     fannie.with_hpi
-  GROUP BY ln_id;  
+  GROUP BY ln_id;

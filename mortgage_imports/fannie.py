@@ -57,4 +57,5 @@ def load_fannie(data_loc):
             print("done: {0}".format(filename))
             fn += 1
     print("Processed {0} files".format(fn))
+    client.disconnect()
 

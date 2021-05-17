@@ -99,7 +99,7 @@ MSA, MSADivision, CBSA, CBSADivision and micropolitan levels. The data
 is pulled directly from the BLS.
 
 - The msa data is from [here](https://download.bls.gov/pub/time.series/la/la.data.60.Metro)
-- The division data is from [here](https://download.bls.gov/pub/time.series/la/la.data.62.Micro)
+- The division data is from [here](https://download.bls.gov/pub/time.series/la/la.data.61.Division)
 - The state data is from [here](https://download.bls.gov/pub/time.series/la/la.data.3.AllStatesS)
 - The micropolitan data is [here](https://download.bls.gov/pub/time.series/la/la.data.62.Micro)
 
