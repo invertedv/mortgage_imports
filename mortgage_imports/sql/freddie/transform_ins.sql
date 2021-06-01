@@ -17,7 +17,7 @@ INSERT INTO freddie.trans
 /*    ln_orig_dt = '' ? NULL :
       toDate(concat(substr(ln_orig_dt = '' ? '011970' : ln_orig_dt, 3, 4), '-',
       substr(ln_orig_dt = '' ? '011970' : ln_orig_dt, 1, 2), '-01')) AS ln_orig_dt,*/
-    ln_fp_dt = '' ? NULL :
+    ln_fp_dt = '' ? toDate('1970-01-01') :
       toDate(concat(substr(ln_fp_dt = '' ? '011970' : ln_fp_dt, 1, 4), '-',
       substr(ln_fp_dt = '' ? '011970' : ln_fp_dt, 5, 2), '-01')) AS ln_fp_dt,
     ln_fp_dt IS NULL ? -1 : dateDiff('month', toStartOfMonth(ln_fp_dt), dt) AS ln_age,

@@ -1,4 +1,4 @@
-CREATE TABLE freddie.trans
+CREATE TABLE freddie.with_hpi
 (
     dt                     Date,
 /*    deal_id String,*/
@@ -9,17 +9,17 @@ CREATE TABLE freddie.trans
 /*    mserv_name LowCardinality(String),*/
     ln_orig_ir             Float32,
     ln_c_ir                Float32,
-    ln_orig_prin           Float32,
+    ln_orig_prin1          Float32,
 /*    ln_iss_prin Float32,*/
-    ln_c_prin              Float32,
+    ln_c_prin1             Float32,
     ln_orig_term           Int16,
 /*    ln_orig_dt Nullable(Date),*/
     ln_fp_dt               Date,
     ln_age                 Int16,
     ln_rem_term_legal      Int16,
 /*    ln_rem_term_act Int16,*/
-    ln_mat_dt              Nullable(Date),
-    ln_orig_ltv            Int16,
+    ln_mat_dt              Date,
+    ln_orig_ltv1           Int16,
     ln_orig_cltv           Int16,
     borr_num               Int16,
     borr_dti               Int16,
@@ -50,7 +50,7 @@ CREATE TABLE freddie.trans
 /*    ln_sched_prin Float32,*/
 /*    ln_tot_prin Float32,*/
 /*    ln_usched_prin Float32,*/
-    ln_last_pay_dt         Nullable(Date),
+    ln_last_pay_dt Date,
 /*    fcl_dt Nullable(Date),*/
 /*    fcl_dispo_dt           Date,*/
     fcl_cost               Float32,
@@ -120,8 +120,26 @@ CREATE TABLE freddie.trans
     ln_dfrd_pay_flg        LowCardinality(FixedString(1)), /* NIF Y,N Deferred Payment Plan */
     ln_curr_eltv           Nullable(Float32), /* NIF estimated current LTV from Freddie */
     ln_zb_prin             Nullable(Float32), /* NIF: UPB just prior to zero balance */
-    ln_dq_distr_flg LowCardinality(FixedString(1)) /* NIF DQ due to natural disaster Y,<other> */
+    ln_dq_distr_flg LowCardinality(FixedString(1)), /* NIF DQ due to natural disaster Y,<other> */
 
+    prop_orig_hpi1 Float32,
+    prop_dt_hpi1 Float32,
+    rt_mort15yr Float32,
+    rt_mort30yr Float32,
+    rt_mortarm5 Float32,
+    rt_treas10yr Float32,
+    rt_libor12mo Float32,
+    rt_libor1mo Float32,
+    rt_libor3mo Float32,
+    rt_orig_mort15yr Float32,
+    rt_orig_mort30yr Float32,
+    rt_orig_mortarm5 Float32,
+    rt_orig_treas10yr Float32,
+    rt_orig_libor12mo Float32,
+    rt_orig_libor1mo Float32,
+    rt_orig_libor3mo Float32,
+    unemp_rate Float32
 )
 ENGINE = MergeTree()
 ORDER BY (ln_id, dt)
+
