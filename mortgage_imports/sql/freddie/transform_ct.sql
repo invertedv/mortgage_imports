@@ -36,8 +36,8 @@ CREATE TABLE freddie.trans
     ln_mi_pct              Float32,
     ln_amort_cd            LowCardinality(FixedString(3)),
     ln_pp_pen_flg          LowCardinality(FixedString(1)),
-    arm_io_flg             LowCardinality(FixedString(1)),
-    arm_io_end_dt          Nullable(Date),
+/*    arm_io_flg             LowCardinality(FixedString(1)),*/
+/*    arm_io_end_dt          Nullable(Date),*/
 /*    ln_amort_months Int16,*/
     ln_dq_status_cd        LowCardinality(FixedString(2)),
 /*    ln_pay_hist_str String,*/
@@ -50,9 +50,9 @@ CREATE TABLE freddie.trans
 /*    ln_sched_prin Float32,*/
 /*    ln_tot_prin Float32,*/
 /*    ln_usched_prin Float32,*/
-/*    ln_last_pay_dt Date,*/
+    ln_last_pay_dt Date,
 /*    fcl_dt Nullable(Date),*/
-    fcl_dispo_dt           Date,
+/*    fcl_dispo_dt           Date,*/
     fcl_cost               Float32,
     fcl_pres_cost          Float32,
     fcl_recov_cost         Float32,
@@ -63,7 +63,7 @@ CREATE TABLE freddie.trans
     fcl_reprch_mw_prcds    Float32,
 /*    fcl_other_prcds Float32,*/
 /*    ln_ni_prin Float32,*/
-    ln_frgv_amt            Float32,
+/*    ln_frgv_amt            Float32,*/
 /*    fcl_orig_list_dt Nullable(Date),*/
 /*    fcl_orig_list_price Float32,*/
 /*    fcl_curr_list_dt Nullable(Date),*/
@@ -72,7 +72,7 @@ CREATE TABLE freddie.trans
 /*    coborr_iss_fico Int16,*/
 /*    borr_c_fico Int16,*/
 /*    coborr_c_fico Int16,*/
-    ln_mi_type_cd          LowCardinality(FixedString(1)),
+/*    ln_mi_type_cd          LowCardinality(FixedString(1)),*/
 /*    serv_activity_flg LowCardinality(FixedString(1)),*/
 /*    mod_c_loss Float32,*/
     mod_t_loss             Float32,
@@ -84,7 +84,7 @@ CREATE TABLE freddie.trans
 /*    ln_zb_chg_dt Nullable(Date),*/
 /*    ln_hldbk_flg LowCardinality(FixedString(1)),*/
 /*    ln_hldbk_dt Nullable(Date),*/
-/*    ln_dq_accr_int Float32,*/
+    ln_dq_accr_int Float32,
     prop_val_mthd          LowCardinality(FixedString(1)),
     ln_highbal_flg         LowCardinality(FixedString(1)),
 /*    arm_tsr5_flg LowCardinality(FixedString(1)),
@@ -102,15 +102,15 @@ CREATE TABLE freddie.trans
     arm_ball_flg LowCardinality(FixedString(1)),
     arm_plan_num Int16,*/
     borr_asst_plan         LowCardinality(FixedString(1)),
-    borr_hltv_refi_opt_flg LowCardinality(FixedString(1)),
-
+/*    borr_hltv_refi_opt_flg LowCardinality(FixedString(1)),*/
 
 /*    deal_name String,*/
 /*    fcl_reprch_mw_prcds_flg LowCardinality(FixedString(1)),*/
 /*    ln_alt_dq_pcds LowCardinality(FixedString(1)),*/
 /*    ln_alt_dq_res_cnt Int16,*/
-/*    ln_defrl_amt Float32)*/
+    ln_defrl_amt Float32,
 /* New orig fields Not in Fannie */
+    ln_id_preharp          LowCardinality(String),
     ln_harp_flg            LowCardinality(FixedString(1)),
 
 /* New perf fields Not in Fannie */

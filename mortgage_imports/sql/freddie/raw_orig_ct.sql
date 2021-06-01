@@ -26,7 +26,7 @@ CREATE TABLE freddie.raw_orig
     slr_name LowCardinality(String),
     serv_name LowCardinality(String),
     ln_highbal_flg LowCardinality(FixedString(1)),
-    harp_ln_id LowCardinality(String),
+    ln_id_preharp LowCardinality(String),
     ln_hrprog_flg LowCardinality(FixedString(1)),
     ln_harp_flg LowCardinality(FixedString(1)), /* NIF HARP indicator */
     prop_val_mthd LowCardinality(FixedString(1))) /* Compare to Fannie */

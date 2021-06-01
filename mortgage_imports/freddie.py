@@ -12,13 +12,17 @@ sql_loc = pkg_resources.resource_filename('mortgage_imports', 'sql/freddie') + '
 if data_loc[-1] != "/": data_loc += "/"
 
 # create DB if not there
-cu.run_query("CREATE DATABASE IF NOT EXISTS freddie", client)
+#cu.run_query("CREATE DATABASE IF NOT EXISTS freddie", client)
 
 #cu.run_query("DROP TABLE IF EXISTS freddie.raw_perf", client)
 #cu.run_query(sql_loc + "raw_perf_ct.sql", client, True)
 #cu.import_flat_file("freddie.raw_perf", data_loc + filename)
 filename = 'historical_data1_Q12017.txt'
 
-cu.run_query("DROP TABLE IF EXISTS freddie.raw_orig", client)
-cu.run_query(sql_loc + "raw_orig_ct.sql", client, True)
-cu.import_flat_file("freddie.raw_orig", data_loc + filename)
+#cu.run_query("DROP TABLE IF EXISTS freddie.raw_orig", client)
+#cu.run_query(sql_loc + "raw_orig_ct.sql", client, True)
+#cu.import_flat_file("freddie.raw_orig", data_loc + filename)
+
+cu.run_query("DROP TABLE IF EXISTS freddie.trans", client)
+cu.run_query(sql_loc + "transform_ct.sql", client, True)
+cu.run_query(sql_loc + "transform_ins.sql", client, True)
