@@ -9,7 +9,7 @@ CREATE TABLE freddie.raw_perf
     ln_c_prin Float32,
     ln_dq_status_cd LowCardinality(FixedString(3)), /* Fannie is (2) */
     ln_age Int16,
-    ln_rem_term_legal Int16,
+    ln_rem_term_legal LowCardinality(FixedString(3)),/*Int16,*/
     ln_repurch_flg LowCardinality(FixedString(1)), /* NIF Y,N,<sp> */
     ln_mod_flg LowCardinality(FixedString(1)),
     ln_zb_cd LowCardinality(FixedString(2)), /* Fannie is (3) */
