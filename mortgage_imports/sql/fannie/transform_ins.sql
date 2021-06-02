@@ -32,7 +32,7 @@ INSERT INTO fannie.trans
     borr_dti,
     borr_orig_fico,
     coborr_orig_fico,
-    borr_first_time_flg,
+    borr_first_time_flg = '' OR borr_first_time_flg = ' ' ? '!' : borr_first_time_flg, /* NEW */
     ln_purp_cd,
     prop_type_cd,
     prop_num_unit,

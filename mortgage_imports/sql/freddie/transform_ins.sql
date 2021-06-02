@@ -25,30 +25,33 @@ INSERT INTO freddie.trans
 /*    ln_rem_term_act,*/
     toDate(concat(substr(ln_mat_dt = '' ? '011970' : ln_mat_dt, 1, 4), '-',
       substr(ln_mat_dt = '' ? '011970' : ln_mat_dt, 5, 2), '-01')) AS ln_mat_dt,
-    ln_orig_ltv,
-    ln_orig_cltv < ln_orig_ltv ? ln_orig_ltv : ln_orig_cltv,
-    borr_num,
-    borr_dti,
-    borr_orig_fico,
+    ln_orig_ltv > 900 ? 0.0 : ln_orig_ltv,
+    multiIf(ln_orig_cltv > 900 AND ln_orig_ltv < 900, ln_orig_ltv,
+            ln_orig_cltv > 900, 0.0,
+            ln_orig_cltv < ln_orig_ltv, ln_orig_ltv, ln_orig_cltv),
+    borr_num > 90 ? 1 : borr_num,
+    borr_dti > 900 ? 0 : borr_dti,
+    borr_orig_fico > 950 ? 0 : borr_orig_fico,
 /*    coborr_orig_fico,*/
-    borr_first_time_flg,
-    ln_purp_cd,
+    borr_first_time_flg = '9' ? 'N' : borr_first_time_flg,
+    ln_purp_cd = '9' ? 'U' : ln_purp_cd,
     prop_type_cd = '99' ? '!' : prop_type_cd AS prop_type_cd,
     prop_num_unit,
     prop_occ_cd = '9' ? 'U' : prop_occ_cd AS prop_occ_cd,
     prop_st,
     prop_msa_cd = '' ? '00000' : prop_msa_cd AS prop_msa,
-    prop_zip3 = '' ? '000' : substr(prop_zip3, 1, 3) AS prop_zip3,
-    ln_mi_pct,
+    prop_zip3 = '' OR prop_zip3 = '00' ? '000' : substr(prop_zip3, 1, 3) AS prop_zip3,
+    ln_mi_pct > 900 ? 0 : ln_mi_pct,
     substr(ln_amort_cd, 1, 3) AS ln_amort_cd,
     ln_pp_pen_flg = '' ? '!' : ln_pp_pen_flg AS ln_pp_pen_flg,
 /*    arm_io_flg = '' ? '!' : arm_io_flg AS arm_io_flg,*/
 /*    arm_io_end_dt = '' ? NULL :
       toDate(concat(substr(arm_io_end_dt = '' ? '011970' : arm_io_end_dt, 3, 4), '-', substr(arm_io_end_dt = '' ? '011970' : arm_io_end_dt, 1, 2), '-01')) AS arm_io_end_dt,*/
 /*    ln_amort_months,*/
-    lower(ln_dq_status_cd) = 'reo' ? 'r' : substr(ln_dq_status_cd, 1, 2) AS ln_status_cd,
+    multiIf(substring(ln_dq_status_cd, 1, 1) = '-', '0',
+      lower(ln_dq_status_cd) = 'reo' ? 'r' : substr(ln_dq_status_cd, 1, 2)) AS ln_status_cd,
 /*    ln_pay_hist_str,*/
-    ln_mod_flg = '' ? '!' : ln_mod_flg AS ln_mod_flg,
+    ln_mod_flg = '' ? 'N' : ln_mod_flg AS ln_mod_flg,
 /*    ln_mi_can_flg = '' ? '!' : ln_mi_can_flg AS ln_mi_can_flg,*/
     ln_zb_cd = '' ? '!' : ln_zb_cd AS ln_zb_cd,
     ln_zb_dt = '' ? NULL :
@@ -98,7 +101,7 @@ INSERT INTO freddie.trans
       toDate(concat(substr(ln_hldbk_dt = '' ? '011970' : ln_hldbk_dt, 3, 4), '-', substr(ln_hldbk_dt = '' ? '011970' : ln_hldbk_dt, 1, 2), '-01')) AS ln_hldbk_dt,*/
     coalesce(ln_dq_accr_int, 0.0) AS ln_dq_accr_int,
     multiIf(prop_val_mthd IN ('', '9'), '!', prop_val_mthd = '2', 'A', prop_val_mthd = '3', 'O', '!') AS prop_val_mthd,
-    ln_highbal_flg = '' ? '!' : ln_highbal_flg AS ln_highbal_flg,
+    ln_highbal_flg = '' ? 'N' : ln_highbal_flg AS ln_highbal_flg,
 /*    arm_tsr5_flg = '' ? '!' : arm_tsr5_flg AS arm_tsr5_flg,
     arm_type = '' ? '!' : lower(arm_type) AS arm_type,
     arm_tsr_period,

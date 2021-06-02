@@ -114,7 +114,7 @@ CREATE TABLE freddie.n3sted (
 /*    serv_activity_flg LowCardinality(FixedString(1)),*/
 /*    mserv_name LowCardinality(String),*/
     ln_repurch_flg LowCardinality(FixedString(1)), /* NEW */
-    ln_curr_eltv Float32, /* NEW */
+    ln_eltv Float32, /* NEW */
 
     prop_hpi Float32,
     prop_val Float32,
