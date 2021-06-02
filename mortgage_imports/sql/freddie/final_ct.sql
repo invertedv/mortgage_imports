@@ -1,6 +1,7 @@
 CREATE TABLE freddie.final (
   harp_status  LowCardinality(String),
   harp_ln_id LowCardinality(String),
+  src_data LowCardinality(String),
 
   ln_id String,
   ln_bucket Int8,

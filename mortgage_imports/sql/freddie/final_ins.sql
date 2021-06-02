@@ -4,6 +4,7 @@ INSERT INTO freddie.final
         b.ln_id_harp != '', 'To HARP', 'None') AS harp_status,
     multiIf(ln_harp_flg = 'Y', ln_id_preharp,
         b.ln_id_harp != '', b.ln_id_harp, 'None') AS harp_ln_id,
+    position(src_file, 'excl') > 0 ? 'Non-Standard' : 'Standard',
     a.*
   FROM
     freddie.n3sted AS a
