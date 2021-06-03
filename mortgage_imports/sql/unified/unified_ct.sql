@@ -32,7 +32,6 @@ CREATE TABLE unified.frannie (
   ln_hrprog_flg        LowCardinality(FixedString(1)),
   ln_dq_accr_int       Float32,
   ln_highbal_flg       LowCardinality(FixedString(1)),
-  ln_defrl_amt         Float32,
 
   prop_type_cd         LowCardinality(FixedString(2)),
   prop_num_unit        Int16,
@@ -73,6 +72,7 @@ CREATE TABLE unified.frannie (
     mod_flg            LowCardinality(FixedString(1)),
     mod_sticky_flg     LowCardinality(FixedString(1)),
     borr_asst_plan     LowCardinality(FixedString(1)),
+    defrl_amt          Float32,
 
     prop_hpi           Float32,
     prop_val           Float32,

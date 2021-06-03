@@ -48,7 +48,6 @@ INSERT INTO fannie.n3sted
     max(ln_highbal_flg) AS ln_highbal_flg,
     max(ln_alt_dq_pcds) AS ln_alt_dq_pcds,
     max(ln_alt_dq_res_cnt) AS ln_alt_dq_res_cnt,
-    max(ln_defrl_amt) AS ln_defrl_amt,
 
     max(prop_type_cd) AS prop_type_cd,
     max(prop_num_unit) AS prop_num_unit,
@@ -110,6 +109,7 @@ INSERT INTO fannie.n3sted
 
     groupArray(ln_mod_flg),
     groupArray(borr_asst_plan),
+    groupArray(ln_defrl_amt),
     groupArray(borr_hltv_refi_opt_flg),
 
     groupArray(serv_name),

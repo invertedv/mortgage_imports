@@ -34,7 +34,6 @@ CREATE TABLE freddie.final (
     ln_hrprog_flg        LowCardinality(FixedString(1)),
     ln_dq_accr_int       Float32,
     ln_highbal_flg       LowCardinality(FixedString(1)),
-    ln_defrl_amt         Float32,
 
     prop_type_cd         LowCardinality(FixedString(2)),
     prop_num_unit        Int16,
@@ -75,6 +74,7 @@ CREATE TABLE freddie.final (
         borr_asst_plan     LowCardinality(FixedString(1)),
         ln_repurch_flg     LowCardinality(FixedString(1)),
         ln_curr_eltv       Float32,
+        defrl_amt          Float32,
 
         prop_hpi           Float32,
         prop_val           Float32,

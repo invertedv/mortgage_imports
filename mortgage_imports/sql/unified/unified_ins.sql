@@ -43,7 +43,6 @@ INSERT INTO TABLE unified.frannie
             ln_hrprog_flg = '9' ? 'N' : ln_hrprog_flg,
             ln_dq_accr_int,
             ln_highbal_flg,
-            ln_defrl_amt,
 
             prop_type_cd,
             prop_num_unit,
@@ -86,6 +85,7 @@ INSERT INTO TABLE unified.frannie
                     arrayMap(x -> 'Y' , arraySlice(monthly.mod_flg, first_mod_index+1))) :
                     monthly.mod_flg AS mod_sticky_flg,
             monthly.borr_asst_plan,
+            monthly.defrl_amt,
 
             monthly.prop_hpi,
             monthly.prop_val,
@@ -149,7 +149,6 @@ INSERT INTO TABLE unified.frannie
             ln_hrprog_flg,
             ln_dq_accr_int,
             ln_highbal_flg,
-            ln_defrl_amt,
 
             prop_type_cd,
             prop_num_unit,
@@ -192,6 +191,7 @@ INSERT INTO TABLE unified.frannie
                     arrayMap(x -> 'Y' , arraySlice(monthly.mod_flg, first_mod_index+1))) :
                     monthly.mod_flg AS mod_sticky_flg,
             monthly.borr_asst_plan,
+            monthly.defrl_amt,
 
             monthly.prop_hpi,
             monthly.prop_val,

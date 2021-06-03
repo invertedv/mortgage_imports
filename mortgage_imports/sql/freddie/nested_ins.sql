@@ -35,7 +35,6 @@ INSERT INTO freddie.n3sted
         max(ln_hrprog_flg) AS ln_hrprog_flg,
         max(ln_dq_accr_int) AS ln_dq_accr_int,
         max(ln_highbal_flg) AS ln_highbal_flg,
-        max(ln_defrl_amt) AS ln_defrl_amt,
 
         max(prop_type_cd) AS prop_type_cd,
         max(prop_num_unit) AS prop_num_unit,
@@ -76,6 +75,7 @@ INSERT INTO freddie.n3sted
         groupArray(borr_asst_plan),
         groupArray(ln_repurch_flg),
         groupArray(ln_curr_eltv is NULL ? 0.0 : ln_curr_eltv),
+        groupArray(ln_defrl_amt),
         groupArray(prop_dt_hpi1),
         /* updated property value */
         groupArray(ln_orig_ltv1 > 0 AND prop_dt_hpi1 > 0 ? (prop_dt_hpi1 / prop_orig_hpi1) * ln_orig_prin1 / (ln_orig_ltv1 / 100.0) : 0.0),

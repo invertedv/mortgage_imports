@@ -56,7 +56,7 @@ def load_freddie(data_loc, build_final):
 
             src_file = filename[0:filename.find(".")]
             cu.run_query(sql_loc + "nested_ins.sql", client, True, "XXXXXX", src_file)
-            
+
             print('done: {0}'.format(filename))
             fn += 1
     

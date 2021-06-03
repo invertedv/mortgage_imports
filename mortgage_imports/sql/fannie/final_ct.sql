@@ -47,7 +47,6 @@ CREATE TABLE fannie.final (
     ln_highbal_flg            LowCardinality(FixedString(1)),
     ln_alt_dq_pcds            LowCardinality(FixedString(1)),
     ln_alt_dq_res_cnt         Int16,
-    ln_defrl_amt              Float32,
 
     prop_type_cd              LowCardinality(FixedString(2)),
     prop_num_unit             Int16,
@@ -110,6 +109,7 @@ CREATE TABLE fannie.final (
 
         mod_flg               LowCardinality(FixedString(1)),
         borr_asst_plan        LowCardinality(FixedString(1)),
+        defrl_amt             Float32,
         borr_hltv_refi_opt_flg LowCardinality(FixedString(1)),
 
         serv_name             LowCardinality(String),
