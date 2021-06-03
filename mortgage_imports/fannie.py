@@ -37,7 +37,7 @@ def load_fannie(data_loc):
             cu.run_query("DROP TABLE IF EXISTS fannie.trans", client)
             cu.run_query(sql_loc + "transform_ct.sql", client, True)
             cu.run_query(sql_loc + "transform_ins.sql", client, True)
-#            cu.run_query("DROP TABLE IF EXISTS fannie.raw", client)
+            cu.run_query("DROP TABLE IF EXISTS fannie.raw", client)
         
             cu.run_query("DROP TABLE IF EXISTS fannie.with_hpi", client)
             cu.run_query(sql_loc + "with_hpi_ct.sql", client, True)
