@@ -56,6 +56,7 @@ CREATE TABLE unified.frannie (
   rt_orig_libor12mo    Float32,
   rt_orig_libor1mo     Float32,
   rt_orig_libor3mo     Float32,
+  first_mod_index      Int16,
 
   monthly Nested(
     dt                 Date,
@@ -70,6 +71,7 @@ CREATE TABLE unified.frannie (
     months_dq          Int8,
 
     mod_flg            LowCardinality(FixedString(1)),
+    mod_sticky_flg     LowCardinality(FixedString(1)),
     borr_asst_plan     LowCardinality(FixedString(1)),
 
     prop_hpi           Float32,

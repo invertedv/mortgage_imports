@@ -17,4 +17,4 @@ INSERT INTO fannie.final
     LEFT JOIN
         fannie.harp_map AS c
     ON
-        .ln_id = c.harp_ln_id;
+        a.ln_id = c.harp_ln_id;

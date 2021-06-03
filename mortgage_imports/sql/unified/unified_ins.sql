@@ -1,5 +1,9 @@
 /*
  Insert the union of Freddie and Fannie data
+
+ monthly.mod_sticky_flg has 'Y' always after the first 'Y'. Fannie updates this monthly. Freddie only flags 'Y'
+ on the month of the modification.
+
 */
 INSERT INTO TABLE unified.frannie
     SELECT
@@ -30,13 +34,13 @@ INSERT INTO TABLE unified.frannie
             ln_fp_dt,
             ln_orig_ltv,
             ln_orig_cltv,
-            ln_purp_cd,
+            ln_purp_cd = 'N' ? 'R' : ln_purp_cd,
             ln_mi_pct,
             ln_amort_cd,
             ln_pp_pen_flg,
 
             ln_zb_dt,
-            ln_hrprog_flg,
+            ln_hrprog_flg = '9' ? 'N' : ln_hrprog_flg,
             ln_dq_accr_int,
             ln_highbal_flg,
             ln_defrl_amt,
@@ -63,6 +67,7 @@ INSERT INTO TABLE unified.frannie
             rt_orig_libor12mo,
             rt_orig_libor1mo,
             rt_orig_libor3mo,
+            indexOf(monthly.mod_flg, 'Y') AS first_mod_index,
 
             monthly.dt,
             monthly.age,
@@ -76,6 +81,10 @@ INSERT INTO TABLE unified.frannie
             monthly.months_dq,
 
             monthly.mod_flg,
+            first_mod_index > 0 ?
+                arrayConcat(arraySlice(monthly.mod_flg, 1, first_mod_index),
+                    arrayMap(x -> 'Y' , arraySlice(monthly.mod_flg, first_mod_index+1))) :
+                    monthly.mod_flg AS mod_sticky_flg,
             monthly.borr_asst_plan,
 
             monthly.prop_hpi,
@@ -104,7 +113,7 @@ INSERT INTO TABLE unified.frannie
             fc.ce_prcds,
             fc.reprch_mw_prcds
         FROM
-            freddie.final LIMIT 100)
+            freddie.final)
     UNION ALL (
         SELECT
             harp_status,
@@ -164,6 +173,7 @@ INSERT INTO TABLE unified.frannie
             rt_orig_libor12mo,
             rt_orig_libor1mo,
             rt_orig_libor3mo,
+            indexOf(monthly.mod_flg, 'Y') AS first_mod_index,
 
             monthly.dt,
             monthly.age,
@@ -177,6 +187,10 @@ INSERT INTO TABLE unified.frannie
             monthly.months_dq,
 
             monthly.mod_flg,
+            first_mod_index > 0 ?
+                arrayConcat(arraySlice(monthly.mod_flg, 1, first_mod_index),
+                    arrayMap(x -> 'Y' , arraySlice(monthly.mod_flg, first_mod_index+1))) :
+                    monthly.mod_flg AS mod_sticky_flg,
             monthly.borr_asst_plan,
 
             monthly.prop_hpi,
@@ -205,7 +219,7 @@ INSERT INTO TABLE unified.frannie
             fc.ce_prcds,
             fc.reprch_mw_prcds
         FROM
-            fannie.final LIMIT 100)
+            fannie.final)
 
 
 
