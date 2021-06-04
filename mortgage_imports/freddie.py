@@ -17,6 +17,9 @@ def load_freddie(data_loc, build_final):
     # file count
     fn = 0
 
+    # create DB if not there
+    cu.run_query("CREATE DATABASE IF NOT EXISTS freddie", client)
+
     if not build_final:
         cu.run_query("DROP TABLE IF EXISTS freddie.n3sted", client)
         cu.run_query(sql_loc + "nested_ct.sql", client, True)
@@ -31,9 +34,6 @@ def load_freddie(data_loc, build_final):
             else:
                 parts = filename.split('data')
                 perf_file = parts[0] + 'data_time' + parts[1]
-
-            # create DB if not there
-            cu.run_query("CREATE DATABASE IF NOT EXISTS freddie", client)
     
             cu.run_query("DROP TABLE IF EXISTS freddie.raw_perf", client)
             cu.run_query(sql_loc + "raw_perf_ct.sql", client, True)
