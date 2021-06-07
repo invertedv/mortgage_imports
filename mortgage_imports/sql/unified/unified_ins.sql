@@ -20,7 +20,7 @@ INSERT INTO TABLE unified.frannie
             src_file,
             slr_chan_cd,
             slr_name,
-            serv_name,
+            serv_name = '' ? 'other' : serv_name AS serv_name,
 
             last_dt,
             last_upb,
@@ -126,7 +126,10 @@ INSERT INTO TABLE unified.frannie
             src_file,
             slr_chan_cd,
             slr_name,
-            arrayElement(monthly.serv_name, 1),
+            /* freddie value is the servicer on last month */
+            multiIf(arrayElement(monthly.serv_name, -1) = '', 'other',
+                position(arrayElement(monthly.serv_name, -1), 'other servicers') > 0, 'other',
+                arrayElement(monthly.serv_name, -1)) AS serv_name,
 
             last_dt,
             last_upb,
