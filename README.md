@@ -60,6 +60,7 @@ The series needed are:
 - MSA/Division level (HPI_AT_metro.csv)
 - Non-metro area (HPI_AT_nonmetro.csv)
 - State (HPI_AT_state.csv)
+- National (longer_HPI_EXP_us_nsa.xls)
 
 Excel files need to be saved as CSV. If there is a header row, this should
 be deleted.

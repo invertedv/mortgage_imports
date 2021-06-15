@@ -52,6 +52,11 @@ def load_fhfa(data_loc):
     cu.run_query(sql_loc + "zip3_ct.sql", client, True)
     cu.import_flat_file("fhfa.zip3", data_loc + "HPI_AT_3zip.csv", delim=",")
     
+    # load the usa table
+    cu.run_query("DROP TABLE IF EXISTS fhfa.usa", client)
+    cu.run_query(sql_loc + "usa_ct.sql", client, True)
+    cu.import_flat_file("fhfa.usa", data_loc + "longer_HPI_EXP_us_nsa.csv", delim=",")
+
     client.disconnect()
 
 
