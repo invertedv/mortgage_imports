@@ -1,7 +1,8 @@
 INSERT INTO fhfa.zip3_annotated
     SELECT
         a.prop_zip3 AS prop_zip3,
-        c.prop_st,
+        c.prop_st AS prop_st,
+        c.prop_zip AS prop_zip,
         a.dt AS dt,
         a.hpi AS hpi,
         100 * (a.hpi / b.hpi - 1.0) AS hpi_qpct_chg
