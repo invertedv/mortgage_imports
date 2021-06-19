@@ -1,6 +1,7 @@
 INSERT INTO fhfa.state_annotated
     SELECT
         a.prop_st AS prop_st,
+        c.prop_state_name AS prop_state_name,
         a.dt AS dt,
         a.hpi AS hpi,
         100.0 * (a.hpi / b.hpi - 1) AS hpi_qpct_chg
@@ -25,3 +26,7 @@ INSERT INTO fhfa.state_annotated
     ON
         subtractQuarters(a.dt, 1) = b.dt
         AND a.prop_st = b.prop_st
+    JOIN
+        map.st_cd AS c
+    ON
+        a.prop_st = c.prop_st
