@@ -95,4 +95,15 @@ def load_econ(data_loc):
     cu.run_query(sql_loc + "unemp_cbsa_ins.sql", client, True, ["XXXXX", "YYYYY", "ZZZZZ", "TTTTT"],
               ["unemp_cbsad", "prop_cbsad_cd", "prop_msad_cd", "econ.unemp_msad"])
 
+    # usa values
+    cu.run_query("DROP TABLE IF EXISTS econ.unemp_usa_raw", client)
+    cu.run_query(sql_loc + "unemp_usa_raw_ct.sql", client, True, "XXXXX", "unemp_usa_raw")
+    cu.import_flat_file("econ.unemp_usa_raw", data_loc + "us.csv", delim=',')
+
+    cu.run_query("DROP TABLE IF EXISTS econ.unemp_usa", client)
+    cu.run_query(sql_loc + "unemp_ct.sql", client, True, ["XXXXX", "YYYYY", "ZZZZZ"],
+                 ["unemp_usa", "prop_ctry_cd", "LowCardinality(FixedString(3))"])
+    cu.run_query(sql_loc + "unemp_usa_ins.sql", client, True, ["XXXX"], ["unemp_usa"])
+    cu.run_query("DROP TABLE IF EXISTS econ.unemp_usa_raw", client)
+
     client.disconnect()

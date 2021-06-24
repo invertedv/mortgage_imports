@@ -103,7 +103,7 @@ is pulled directly from the BLS.
 - The division data is from [here](https://download.bls.gov/pub/time.series/la/la.data.61.Division)
 - The state data is from [here](https://download.bls.gov/pub/time.series/la/la.data.3.AllStatesS)
 - The micropolitan data is [here](https://download.bls.gov/pub/time.series/la/la.data.62.Micro)
-
+- The U.S. data is [here](https://data.bls.gov/pdq/SurveyOutputServlet)
 Documentation is [here](https://download.bls.gov/pub/time.series/la/la.txt)
 
 After the files are downloaded:

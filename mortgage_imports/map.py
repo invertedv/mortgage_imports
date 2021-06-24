@@ -63,8 +63,8 @@ def load_map(data_loc):
     cu.run_query("DROP TABLE IF EXISTS map.zip_cbsad", client)
     cu.run_query(sql_loc + "zip_cbsad_ct.sql", client, True)
     cu.run_query(sql_loc + "zip_cbsad_ins.sql", client, True)
-#    cu.run_query("DROP TABLE IF EXISTS map.zip_cbsad_raw", client)
-#    cu.run_query("DROP TABLE IF EXISTS map.zip_cbsa_raw",client)
+    cu.run_query("DROP TABLE IF EXISTS map.zip_cbsad_raw", client)
+    cu.run_query("DROP TABLE IF EXISTS map.zip_cbsa_raw",client)
 
     # load the 5-digit zip to County map
     # some zips cover 2+ counties, so after we read it in, we'll convert the prop_cty_cd field to an array
@@ -78,6 +78,10 @@ def load_map(data_loc):
     cu.run_query(sql_loc + "zip_cty_ct.sql", client, True)
     cu.run_query(sql_loc + "zip_cty_ins.sql", client, True)
     cu.run_query("DROP TABLE IF EXISTS map.zip_cty_raw", client)
-    
+
+    cu.run_query("DROP TABLE IF EXISTS map.msad_geo", client)
+    cu.run_query(sql_loc + "msad_geo_ct.sql", client, True)
+    cu.run_query(sql_loc + "msad_geo_ins.sql", client, True)
+
     client.disconnect()
 
