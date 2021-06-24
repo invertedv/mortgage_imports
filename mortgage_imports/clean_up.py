@@ -8,6 +8,8 @@ def clean_up():
     cu.run_query(sql_loc + "zip3_st_ct.sql", client, True)
     cu.run_query(sql_loc + "zip3_st_ins.sql", client, True)
 
+    # Annotated tables
+    # hpi
     sql_loc = pkg_resources.resource_filename('mortgage_imports', 'sql/fhfa') + '/'
     
     cu.run_query("DROP TABLE IF EXISTS fhfa.zip3_annotated", client)
@@ -29,5 +31,16 @@ def clean_up():
     cu.run_query("DROP TABLE IF EXISTS fhfa.usa_annotated", client)
     cu.run_query(sql_loc + "usa_annotated_ct.sql", client, True)
     cu.run_query(sql_loc + "usa_annotated_ins.sql", client, True)
+
+    # econ
+    sql_loc = pkg_resources.resource_filename('mortgage_imports', 'sql/econ') + '/'
     
+    cu.run_query("DROP TABLE IF EXISTS econ.unemp_state_annotated", client)
+    cu.run_query(sql_loc + "unemp_st_annotated_ct.sql", client, True)
+    cu.run_query(sql_loc + "unemp_st_annotated_ins.sql", client, True)
+
+    cu.run_query("DROP TABLE IF EXISTS econ.unemp_msad_annotated", client)
+    cu.run_query(sql_loc + "unemp_msad_annotated_ct.sql", client, True)
+    cu.run_query(sql_loc + "unemp_msad_annotated_ins.sql", client, True)
+
     client.disconnect()
