@@ -2,6 +2,8 @@ CREATE TABLE map.zip_cbsa_raw
 (
     prop_zip                          LowCardinality(FixedString(5)),
     prop_cbsa_cd                      LowCardinality(FixedString(5)),
+    prop_city                         LowCardinality(String),
+    prop_st                           LowCardinality(FixedString(2)),
     res_ratio                         Float32,
     bus_ratio                         Float32,
     oth_ratio                         Float32,

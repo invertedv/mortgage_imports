@@ -4,10 +4,14 @@ INSERT INTO map.zip_cbsad
         prop_zip,
         groupArray(m) AS cbsads,
         groupArray(cbsatype) AS cbsa_type,
+        groupArray(pc),
+        groupArray(ps),
         groupArray(r) AS res_ratio
     FROM (
         SELECT
             c.prop_zip,
+            c.pc,
+            c.ps,
             c.m,
         /* if it is in an msa but it is not in the fhfa.msad_map table then
            it must be a micro
@@ -22,12 +26,17 @@ INSERT INTO map.zip_cbsad
     */
             SELECT
                 prop_zip,
+                prop_city,
+                prop_st,
                 cast(multiIf(prop_cbsad_cd != '', prop_cbsad_cd,
                     prop_cbsa_cd = '99999', '00000', prop_cbsa_cd)
                     AS FixedString(5)) AS m,
                 multiIf(prop_cbsad_cd != '', 'msad',
                   prop_cbsa_cd = '99999', 'none', 'msa') AS s,
-                prop_cbsad_cd != '' ? a.res_ratio : b.res_ratio AS r
+                prop_cbsad_cd != '' ? a.res_ratio : b.res_ratio AS r,
+                prop_cbsad_cd != '' ? a.prop_city : b.prop_city AS pc,
+                prop_cbsad_cd != '' ? a.prop_st : b.prop_st AS ps
+
             FROM
                 map.zip_cbsa_raw AS b
             LEFT JOIN

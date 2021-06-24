@@ -44,7 +44,7 @@ def load_map(data_loc):
 
     cu.run_query("DROP TABLE IF EXISTS map.zip_cbsa_raw", client)
     cu.run_query(sql_loc + "zip_cbsa_raw_ct.sql", client, True)
-    cu.import_flat_file("map.zip_cbsa_raw", data_loc + "ZIP_CBSA_122020.csv", delim=",")
+    cu.import_flat_file("map.zip_cbsa_raw", data_loc + "ZIP_CBSA_032021.csv", delim=",")
 
     cu.run_query("DROP TABLE IF EXISTS map.zip_cbsa", client)
     cu.run_query(sql_loc + "zip_cbsa_ct.sql", client, True)
@@ -58,13 +58,13 @@ def load_map(data_loc):
     # Note, the file has only zips within divisions, so we have to join to the msa table to get a global table
     cu.run_query("DROP TABLE IF EXISTS map.zip_cbsad_raw", client)
     cu.run_query(sql_loc + "zip_cbsad_raw_ct.sql", client, True)
-    cu.import_flat_file("map.zip_cbsad_raw", data_loc + "ZIP_CBSA_DIV_122020.csv", delim=",")
+    cu.import_flat_file("map.zip_cbsad_raw", data_loc + "ZIP_CBSA_DIV_032021.csv", delim=",")
 
     cu.run_query("DROP TABLE IF EXISTS map.zip_cbsad", client)
     cu.run_query(sql_loc + "zip_cbsad_ct.sql", client, True)
     cu.run_query(sql_loc + "zip_cbsad_ins.sql", client, True)
-    cu.run_query("DROP TABLE IF EXISTS map.zip_cbsad_raw", client)
-    cu.run_query("DROP TABLE IF EXISTS map.zip_cbsa_raw",client)
+#    cu.run_query("DROP TABLE IF EXISTS map.zip_cbsad_raw", client)
+#    cu.run_query("DROP TABLE IF EXISTS map.zip_cbsa_raw",client)
 
     # load the 5-digit zip to County map
     # some zips cover 2+ counties, so after we read it in, we'll convert the prop_cty_cd field to an array
