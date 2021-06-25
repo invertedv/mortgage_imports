@@ -4,6 +4,7 @@ CREATE TABLE econ.unemp_state_annotated
     prop_st_cd           LowCardinality(FixedString(2)),
     prop_st              LowCardinality(FixedString(2)),
     unemp_rate           Float32,
+    unemp_rate_chg       Float32,
     prop_state_name      LowCardinality(String)
 )
 ENGINE = MergeTree()

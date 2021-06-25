@@ -3,12 +3,24 @@ INSERT INTO econ.unemp_msad_annotated
         a.dt,
         a.prop_msad_cd,
         a.unemp_rate,
+        a.unemp_rate_chg,
         b.prop_msad_nm,
         b.prop_st,
         concat(substring(prop_city, 1, 1), lower(substring(prop_city, 2))) AS prop_city,
         b.prop_nzips
-    FROM
-        econ.unemp_msad AS a
+    FROM (
+        SELECT
+            x.dt,
+            x.prop_msad_cd,
+            x.unemp_rate,
+            x.unemp_rate - y.unemp_rate AS unemp_rate_chg
+        FROM
+            econ.unemp_msad AS x
+        JOIN
+            econ.unemp_msad AS y
+        ON
+            subtractMonths(x.dt, 1) = y.dt
+            AND x.prop_msad_cd = y.prop_msad_cd) AS a
     JOIN (
         SELECT
             prop_msad_cd,
