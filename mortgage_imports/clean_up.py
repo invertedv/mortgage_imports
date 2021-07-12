@@ -39,6 +39,10 @@ def clean_up():
     cu.run_query(sql_loc + "unemp_st_annotated_ct.sql", client, True)
     cu.run_query(sql_loc + "unemp_st_annotated_ins.sql", client, True)
 
+    cu.run_query("DROP TABLE IF EXISTS econ.unemp_msa_annotated", client)
+    cu.run_query(sql_loc + "unemp_msa_annotated_ct.sql", client, True)
+    cu.run_query(sql_loc + "unemp_msa_annotated_ins.sql", client, True)
+
     cu.run_query("DROP TABLE IF EXISTS econ.unemp_msad_annotated", client)
     cu.run_query(sql_loc + "unemp_msad_annotated_ct.sql", client, True)
     cu.run_query(sql_loc + "unemp_msad_annotated_ins.sql", client, True)

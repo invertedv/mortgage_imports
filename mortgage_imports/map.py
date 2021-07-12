@@ -79,9 +79,13 @@ def load_map(data_loc):
     cu.run_query(sql_loc + "zip_cty_ins.sql", client, True)
     cu.run_query("DROP TABLE IF EXISTS map.zip_cty_raw", client)
 
-    cu.run_query("DROP TABLE IF EXISTS map.msad_geo", client)
+    cu.run_query("DROP TABLE IF EXISTS map.msad_geos", client)
     cu.run_query(sql_loc + "msad_geo_ct.sql", client, True)
     cu.run_query(sql_loc + "msad_geo_ins.sql", client, True)
+
+    cu.run_query("DROP TABLE IF EXISTS map.msa_geos", client)
+    cu.run_query(sql_loc + "msa_geo_ct.sql", client, True)
+    cu.run_query(sql_loc + "msa_geo_ins.sql", client, True)
 
     client.disconnect()
 
