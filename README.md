@@ -142,6 +142,12 @@ This data is downloaded directly from [fannie](https://capitalmarkets.fanniemae.
 
 There is no pre-processing other than unzipping the files.
 
+**zip Data**
+
+The feature of interest in the zip data is the longitude/latitude of each zip.
+The data is from [Geonames](https://www.geonames.org).  The download page is
+[here](http://download.geonames.org/export/zip/).
+
 ### Databases and Tables
 
 The following are created by this package:
@@ -178,6 +184,10 @@ The following are created by this package:
     and unemployment.
   
     The 3-digit Zip FHFA HPI is used
+
+- **zip** database
+  - zip5.  Latitude and longitude of each zip code.
+  - zip3.  Latitude and longitude of each 3-digit zip.
 
 - **aux** database
   - *fctimes* Fannie Mae foreclosure timelines. These are available [here](https://singlefamily.fanniemae.com/media/6726/display)
