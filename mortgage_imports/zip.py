@@ -11,7 +11,7 @@ See [here](https://www.geonames.org)
 """
 
 
-def load_map(data_loc):
+def load_zip(data_loc):
     client = cu.make_connection()
     sql_loc = pkg_resources.resource_filename('mortgage_imports', 'sql/zip') + '/'
     # create DB if not there
