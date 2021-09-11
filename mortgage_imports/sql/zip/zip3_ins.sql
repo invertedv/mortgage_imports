@@ -5,6 +5,7 @@ INSERT INTO zip.zip3
     SELECT
         a.prop_zip3,
         b.prop_city as prop_city,
+        c.prop_msa_cd != '' ? prop_msa_cd : '00000' AS prop_msa_cd,
         atan2(avgz, hyp) * 360.0 / (2.0 * 3.141592654) AS latitude,
         atan2(avgy, avgx) * 360.0 / (2.0 * 3.141592654) AS longitude
     FROM (
@@ -47,4 +48,31 @@ INSERT INTO zip.zip3
             nz DESC)
         GROUP BY prop_zip3) AS b
     ON
-        a.prop_zip3 = b.prop_zip3;
+        a.prop_zip3 = b.prop_zip3
+    LEFT JOIN (
+        SELECT
+            prop_zip3,
+            arrayElement(prop_msa_cd, 1) AS prop_msa_cd
+        FROM (
+        SELECT
+            prop_zip3,
+            groupArray(prop_msa_cd) AS prop_msa_cd
+        FROM (
+            SELECT
+                prop_msa_cd,
+                substr(g.prop_zip, 1, 3) AS prop_zip3,
+                count(*) AS n
+            FROM
+                map.msa_geos ARRAY JOIN geos AS g
+            WHERE
+                prop_msa_cd != '00000'
+            GROUP BY
+                prop_zip3,
+            prop_msa_cd
+            ORDER BY
+                n DESC)
+        GROUP BY
+            prop_zip3)) AS c
+    ON
+        a.prop_zip3 = c.prop_zip3;
+
