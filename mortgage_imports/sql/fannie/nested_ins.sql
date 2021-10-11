@@ -1,7 +1,7 @@
 INSERT INTO fannie.n3sted
   SELECT
     ln_id String,
-    toInt8(20.0 * rand32() / 4294967295.0) AS ln_bucket,
+    modulo(arraySum(bitPositionsToArray(reinterpretAsUInt64(substr(ln_id, 5, 8))), 20) AS ln_bucket,
     ln_fp_dt IS NOT NULL ?
       concat(cast(toYear(ln_fp_dt) AS String),'Q',
         cast(toQuarter(ln_fp_dt) AS String)) : 'Missing' AS vintage,
