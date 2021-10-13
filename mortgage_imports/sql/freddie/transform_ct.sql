@@ -56,7 +56,7 @@ CREATE TABLE freddie.trans
     ln_harp_flg            LowCardinality(FixedString(1)),
 
 /* New perf fields Not in Fannie */
-    ln_repurch_flg         LowCardinality(FixedString(1)), /* NIF Y,N,<sp> */
+/*    ln_repurch_flg         LowCardinality(FixedString(1)), /* NIF Y,N,<sp> */*/
     fcl_loss               Nullable(Float32), /* NIF, total loss Compare to fannie ln_t_credit_loss*/
     ln_stepmod_flg         LowCardinality(FixedString(1)), /* NIF Y,N <sp>=not a step mod */
     ln_dfrd_pay_flg        LowCardinality(FixedString(1)), /* NIF Y,N Deferred Payment Plan */

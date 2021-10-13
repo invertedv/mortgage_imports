@@ -72,7 +72,7 @@ CREATE TABLE freddie.final (
 
         mod_flg            LowCardinality(FixedString(1)),
         borr_asst_plan     LowCardinality(FixedString(1)),
-        ln_repurch_flg     LowCardinality(FixedString(1)),
+/*        ln_repurch_flg     LowCardinality(FixedString(1)),*/
         ln_curr_eltv       Float32,
         defrl_amt          Float32,
 

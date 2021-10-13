@@ -38,7 +38,7 @@ def load_freddie(data_loc, build_final):
             cu.run_query("DROP TABLE IF EXISTS freddie.raw_perf", client)
             cu.run_query(sql_loc + "raw_perf_ct.sql", client, True)
             cu.import_flat_file("freddie.raw_perf", data_loc + perf_file, options='--input_format_allow_errors_num=20')
-            
+
             cu.run_query("DROP TABLE IF EXISTS freddie.raw_orig", client)
             cu.run_query(sql_loc + "raw_orig_ct.sql", client, True)
             cu.import_flat_file("freddie.raw_orig", data_loc + filename,  options='--input_format_allow_errors_num=20')

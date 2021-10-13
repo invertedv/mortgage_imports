@@ -63,7 +63,7 @@ The series needed are:
 - National (longer_HPI_EXP_us_nsa.xls)
 
 Excel files need to be saved as CSV. If there is a header row, this should
-be deleted.
+be deleted. Negative numbers should not have parentheses.
 
 **Interest Rates**
 
@@ -103,7 +103,8 @@ is pulled directly from the BLS.
 - The division data is from [here](https://download.bls.gov/pub/time.series/la/la.data.61.Division)
 - The state data is from [here](https://download.bls.gov/pub/time.series/la/la.data.3.AllStatesS)
 - The micropolitan data is [here](https://download.bls.gov/pub/time.series/la/la.data.62.Micro)
-- The U.S. data is [here](https://data.bls.gov/pdq/SurveyOutputServlet)
+- The U.S. data is [here](https://data.bls.gov/pdq/) -- you have to go through the API to select the series
+
 Documentation is [here](https://download.bls.gov/pub/time.series/la/la.txt)
 
 After the files are downloaded:
@@ -139,6 +140,12 @@ also retained in the CBSA tables.
 **Fannie Data**
 
 This data is downloaded directly from [fannie](https://capitalmarkets.fanniemae.com/credit-risk-transfer/single-family-credit-risk-transfer/fannie-mae-single-family-loan-performance-data)
+
+There is no pre-processing other than unzipping the files.
+
+**Freddie Data**
+
+The data is downloaded directly form [freddie](http://www.freddiemac.com/research/datasets/sf_loanlevel_dataset.page).
 
 There is no pre-processing other than unzipping the files.
 

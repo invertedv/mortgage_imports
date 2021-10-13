@@ -1,7 +1,7 @@
 INSERT INTO freddie.n3sted
     SELECT
         ln_id String,
-        modulo(arraySum(bitPositionsToArray(reinterpretAsUInt64(substr(ln_id, 5, 8))), 20) AS ln_bucket,
+        modulo(arraySum(bitPositionsToArray(reinterpretAsUInt64(substr(ln_id, 5, 8)))), 20) AS ln_bucket,
         toYear(ln_fp_dt) > 1970 ?
           concat(cast(toYear(ln_fp_dt) AS String),'Q',
             cast(toQuarter(ln_fp_dt) AS String)) : 'Missing' AS vintage,
@@ -73,7 +73,7 @@ INSERT INTO freddie.n3sted
 
         groupArray(ln_mod_flg),
         groupArray(borr_asst_plan),
-        groupArray(ln_repurch_flg),
+/*        groupArray(ln_repurch_flg),*/
         groupArray(ln_curr_eltv is NULL ? 0.0 : ln_curr_eltv),
         groupArray(ln_defrl_amt),
         groupArray(prop_dt_hpi1),

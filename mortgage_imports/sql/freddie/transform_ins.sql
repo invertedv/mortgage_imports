@@ -63,7 +63,7 @@ INSERT INTO freddie.trans
         ln_harp_flg,
 
         /* New perf fields Not in Fannie */
-        upper(ln_repurch_flg) IN ('Y', 'N') ? upper(ln_repurch_flg) : '!' AS ln_repurch_flg,    /* NIF Y,N,<sp> */
+/*        upper(ln_repurch_flg) IN ('Y', 'N') ? upper(ln_repurch_flg) : '!' AS ln_repurch_flg,    /* NIF Y,N,<sp> */*/
         fcl_loss,              /* NIF, total loss Compare to fannie ln_t_credit_loss*/
         upper(ln_stepmod_flg) IN ('Y', 'N') ? upper(ln_stepmod_flg) : '!' AS ln_stepmod_flg,    /* NIF Y,N <sp>=not a step mod */
         upper(ln_dfrd_pay_flg) IN ('Y', 'N') ? upper(ln_dfrd_pay_flg) : '!' AS ln_dfrd_pay_flg, /* NIF Y,N Deferred Payment Plan */
