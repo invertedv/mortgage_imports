@@ -14,6 +14,7 @@ def unify():
     cu.run_query("DROP TABLE IF EXISTS unified.frannie", client)
     cu.run_query(sql_loc + "unified_ct.sql", client, True)
     cu.run_query(sql_loc + "unified_ins.sql", client, True)
+    client.disconnect()
 
 def backup(table, backup_table):
     from muti import chu

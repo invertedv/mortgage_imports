@@ -19,8 +19,8 @@ INSERT INTO TABLE unified.frannie
             vintage,
             src_file,
             slr_chan_cd,
-            slr_name,
-            serv_name = '' ? 'other' : serv_name AS serv_name,
+            slr_name = '' OR startsWith(slr_name, 'other') ? 'other' : slr_name AS slr_name,
+            serv_name = '' OR startsWith(serv_name, 'other') ? 'other' : serv_name AS serv_name,
 
             last_dt,
             last_upb,
@@ -66,7 +66,14 @@ INSERT INTO TABLE unified.frannie
             rt_orig_libor12mo,
             rt_orig_libor1mo,
             rt_orig_libor3mo,
-            indexOf(monthly.mod_flg, 'Y') AS first_mod_index,
+            /*indexOf(monthly.mod_flg, 'Y') AS first_mod_index,*/
+           /* Freddie also includes a value of P for Prior mod */
+           CASE
+             WHEN indexOf(monthly.mod_flg, 'Y') > 0 AND indexOf(monthly.mod_flg, 'P') > 0 AND indexOf(monthly.mod_flg, 'Y') < indexOf(monthly.mod_flg, 'P') THEN indexOf(monthly.mod_flg, 'Y')
+             WHEN indexOf(monthly.mod_flg, 'Y') > 0 AND indexOf(monthly.mod_flg, 'P') > 0 AND indexOf(monthly.mod_flg, 'Y') > indexOf(monthly.mod_flg, 'P') THEN indexOf(monthly.mod_flg, 'P')
+             WHEN indexOf(monthly.mod_flg, 'P') > 0 THEN indexOf(monthly.mod_flg, 'P')
+             ELSE indexOf(monthly.mod_flg, 'Y')
+           END AS first_mod_index,
 
             monthly.dt,
             monthly.age,
@@ -81,8 +88,8 @@ INSERT INTO TABLE unified.frannie
 
             monthly.mod_flg,
             first_mod_index > 0 ?
-                arrayConcat(arraySlice(monthly.mod_flg, 1, first_mod_index),
-                    arrayMap(x -> 'Y' , arraySlice(monthly.mod_flg, first_mod_index+1))) :
+                arrayConcat(arraySlice(monthly.mod_flg, 1, first_mod_index-1),
+                    arrayMap(x -> 'Y' , arraySlice(monthly.mod_flg, first_mod_index))) :
                     monthly.mod_flg AS mod_sticky_flg,
             monthly.borr_asst_plan,
             monthly.defrl_amt,
@@ -104,11 +111,12 @@ INSERT INTO TABLE unified.frannie
             mods.tot_loss,
 
             fc.dt,
-            fc.cost,
-            fc.pres_cost,
-            fc.recov_cost,
-            fc.misc_cost,
-            fc.taxes,
+            /* Freddie has costs as negative */
+            arrayMap(x -> -x, fc.cost),
+            arrayMap(x -> -x, fc.pres_cost),
+            arrayMap(x -> -x, fc.recov_cost),
+            arrayMap(x -> -x, fc.misc_cost),
+            arrayMap(x -> -x, fc.taxes),
             fc.net_prcds,
             fc.ce_prcds,
             fc.reprch_mw_prcds
@@ -125,11 +133,16 @@ INSERT INTO TABLE unified.frannie
             vintage,
             src_file,
             slr_chan_cd,
-            slr_name,
-            /* freddie value is the servicer on last month */
+
+            slr_name = '' OR startsWith(slr_name, 'other') ? 'other' : slr_name AS slr_name,
+
+            arrayFirst(x -> x = '' ? 0 : 1, arrayReverse(monthly.serv_name)) = '' OR
+                startsWith( arrayFirst(x -> x = '' ? 0 : 1, arrayReverse(monthly.serv_name)), 'other') ?
+                'other' :  arrayFirst(x -> x = '' ? 0 : 1, arrayReverse(monthly.serv_name)) AS serv_name,
+            /* freddie value is the servicer on last month, fannie has a value for each month
             multiIf(arrayElement(monthly.serv_name, -1) = '', 'other',
                 position(arrayElement(monthly.serv_name, -1), 'other servicers') > 0, 'other',
-                arrayElement(monthly.serv_name, -1)) AS serv_name,
+                arrayElement(monthly.serv_name, -1)) AS serv_name,*/
 
             last_dt,
             last_upb,
@@ -189,10 +202,11 @@ INSERT INTO TABLE unified.frannie
             monthly.months_dq,
 
             monthly.mod_flg,
+            /* if flag is ! call it N */
             first_mod_index > 0 ?
-                arrayConcat(arraySlice(monthly.mod_flg, 1, first_mod_index),
+                arrayConcat(arrayMap(x -> x = '!' ? 'N': x, arraySlice(monthly.mod_flg, 1, first_mod_index)),
                     arrayMap(x -> 'Y' , arraySlice(monthly.mod_flg, first_mod_index+1))) :
-                    monthly.mod_flg AS mod_sticky_flg,
+                    arrayMap(x -> x = '!' ? 'N' : x, monthly.mod_flg) AS mod_sticky_flg,
             monthly.borr_asst_plan,
             monthly.defrl_amt,
 
