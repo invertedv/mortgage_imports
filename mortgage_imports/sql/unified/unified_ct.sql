@@ -28,6 +28,11 @@ CREATE TABLE unified.frannie (
   ln_amort_cd          LowCardinality(FixedString(3)),
   ln_pp_pen_flg        LowCardinality(FixedString(1)),
 
+  ln_nonstd_doc_flg    LowCardinality(FixedString(1)),
+  ln_nonstd_uw_flg     LowCardinality(FixedString(1)),
+  ln_govt_guar_flg     LowCardinality(FixedString(1)),
+  ln_negam_flg         LowCardinality(FixedString(1)),
+
   ln_zb_dt             Nullable(Date),
   ln_hrprog_flg        LowCardinality(FixedString(1)),
   ln_dq_accr_int       Float32,

@@ -39,6 +39,11 @@ INSERT INTO TABLE unified.frannie
             ln_amort_cd,
             ln_pp_pen_flg,
 
+            'N' AS ln_nonstd_doc_flg,
+            'N' AS ln_nonstd_uw_flg,
+            'N' AS ln_govt_guar_flg,
+            'N' AS ln_negam_flg,
+
             ln_zb_dt,
             ln_hrprog_flg = '9' ? 'N' : ln_hrprog_flg,
             ln_dq_accr_int,
@@ -126,7 +131,7 @@ INSERT INTO TABLE unified.frannie
         SELECT
             harp_status,
             harp_ln_id,
-            'fannie',
+            concat('fannie:', src_data),
 
             ln_id,
             ln_bucket,
@@ -160,6 +165,11 @@ INSERT INTO TABLE unified.frannie
             ln_mi_pct,
             ln_amort_cd,
             ln_pp_pen_flg,
+
+            ln_nonstd_doc_flg,
+            ln_nonstd_uw_flg,
+            ln_govt_guar_flg,
+            ln_negam_flg,
 
             ln_zb_dt,
             ln_hrprog_flg,

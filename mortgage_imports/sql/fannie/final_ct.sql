@@ -5,6 +5,7 @@ CREATE TABLE fannie.final (
     ln_id                     String,
     ln_bucket                 Int8,
     vintage                   LowCardinality(String),
+    src_data                  LowCardinality(String),
     src_file                  LowCardinality(String),
     deal_id                   LowCardinality(String),
     slr_chan_cd               LowCardinality(FixedString(1)),
@@ -31,6 +32,10 @@ CREATE TABLE fannie.final (
     ln_pp_pen_flg             LowCardinality(FixedString(1)),
     ln_amort_months           Int16,
     ln_mi_can_flg             LowCardinality(FixedString(2)),
+    ln_nonstd_doc_flg         LowCardinality(FixedString(1)),
+    ln_nonstd_uw_flg          LowCardinality(FixedString(1)),
+    ln_govt_guar_flg          LowCardinality(FixedString(1)),
+    ln_negam_flg              LowCardinality(FixedString(1)),
 
     ln_zb_dt                  Nullable(Date),
     ln_remvd_prin             Float32,

@@ -108,6 +108,7 @@ CREATE TABLE fannie.raw
     ln_alt_dq_pcds                 LowCardinality(FixedString(1)),
     ln_alt_dq_res_cnt              Int16,
     ln_defrl_amt                   Float32
+    <extra_fields>
 )
 ENGINE = MergeTree()
 ORDER BY (ln_id)

@@ -3,6 +3,7 @@ CREATE TABLE fannie.trans
     dt                         Date,
     deal_id                    String,
     ln_id                      String,
+    src_data                   LowCardinality(String),
     slr_chan_cd                LowCardinality(FixedString(1)),
     slr_name                   LowCardinality(String),
     serv_name                  LowCardinality(String),
@@ -107,7 +108,11 @@ CREATE TABLE fannie.trans
     fcl_reprch_mw_prcds_flg    LowCardinality(FixedString(1)),
     ln_alt_dq_pcds             LowCardinality(FixedString(1)),
     ln_alt_dq_res_cnt          Int16,
-    ln_defrl_amt               Float32
+    ln_defrl_amt               Float32,
+    ln_nonstd_doc_flg          LowCardinality(FixedString(1)),
+    ln_nonstd_uw_flg           LowCardinality(FixedString(1)),
+    ln_govt_guar_flg           LowCardinality(FixedString(1)),
+    ln_negam_flg               LowCardinality(FixedString(1))
 )
 ENGINE = MergeTree()
 ORDER BY (ln_id, dt)

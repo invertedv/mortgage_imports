@@ -3,6 +3,7 @@ INSERT INTO fannie.trans
         toDate(CONCAT(SUBSTR(month,3,4), '-', SUBSTR(month,1,2),'-01')) AS dt,
         deal_id,
         ln_id,
+        '<src>' AS src_data,
         slr_chan_cd,
         lower(slr_name),
         lower(serv_name),
@@ -122,6 +123,7 @@ INSERT INTO fannie.trans
         fcl_reprch_mw_prcds_flg = '' ? '!' : fcl_reprch_mw_prcds_flg AS fcl_reprch_mw_prcds_flg,
         ln_alt_dq_pcds,
         ln_alt_dq_res_cnt,
-        ln_defrl_amt
+        ln_defrl_amt,
+        <extra_field_ins>
   FROM
       fannie.raw
