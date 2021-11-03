@@ -38,6 +38,7 @@ INSERT INTO TABLE unified.frannie
             ln_mi_pct,
             ln_amort_cd,
             ln_pp_pen_flg,
+            ln_amort_cd AS ln_type,
 
             'N' AS ln_nonstd_doc_flg,
             'N' AS ln_nonstd_uw_flg,
@@ -165,6 +166,7 @@ INSERT INTO TABLE unified.frannie
             ln_mi_pct,
             ln_amort_cd,
             ln_pp_pen_flg,
+            multiIf(arm_io_flg='Y', 'IO', ln_negam_flg='Y', 'NEGAM', ln_amort_cd) AS ln_type,
 
             ln_nonstd_doc_flg,
             ln_nonstd_uw_flg,
@@ -217,7 +219,7 @@ INSERT INTO TABLE unified.frannie
                 arrayConcat(arrayMap(x -> x = '!' ? 'N': x, arraySlice(monthly.mod_flg, 1, first_mod_index)),
                     arrayMap(x -> 'Y' , arraySlice(monthly.mod_flg, first_mod_index+1))) :
                     arrayMap(x -> x = '!' ? 'N' : x, monthly.mod_flg) AS mod_sticky_flg,
-            monthly.borr_asst_plan,
+            arrayMap(bap -> bap in ('N', '7') ? '!' : bap, monthly.borr_asst_plan) AS borr_asst_plan,
             monthly.defrl_amt,
 
             monthly.prop_hpi,

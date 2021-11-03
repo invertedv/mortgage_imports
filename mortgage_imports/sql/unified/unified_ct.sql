@@ -27,6 +27,7 @@ CREATE TABLE unified.frannie (
   ln_mi_pct            Float32,
   ln_amort_cd          LowCardinality(FixedString(3)),
   ln_pp_pen_flg        LowCardinality(FixedString(1)),
+  ln_type              LowCardinality(String),
 
   ln_nonstd_doc_flg    LowCardinality(FixedString(1)),
   ln_nonstd_uw_flg     LowCardinality(FixedString(1)),
