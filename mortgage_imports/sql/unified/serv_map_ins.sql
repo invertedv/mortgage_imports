@@ -9,7 +9,8 @@ WITH dur AS (
     GROUP BY serv_name_mapped),
 quans AS (
     SELECT
-        quantilesExactWeighted(0.25, 0.5, 0.75)(ppr, n) AS qs
+/*        quantilesExactWeighted(0.25, 0.5, 0.75)(ppr, n) AS qs*/
+        quantilesExact(0.25, 0.5, 0.75)(ppr) AS qs
     FROM
         dur),
 grps AS (
