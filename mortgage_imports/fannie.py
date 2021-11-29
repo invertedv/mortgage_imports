@@ -12,11 +12,13 @@ def load_fannie(data_loc: str, src: str, first: bool):
     # create DB if not there
     cu.run_query("CREATE DATABASE IF NOT EXISTS fannie", client)
 
-    if src == 'standard':
+    if src == 'harp_map':
         # load harp_map table which maps non-harp loans to their harp refis
         cu.run_query("DROP TABLE IF EXISTS fannie.harp_map", client)
         cu.run_query(sql_loc + "harp_map_ct.sql", client, True)
         cu.import_flat_file("fannie.harp_map", data_loc + "Loan_Mapping.txt", delim=",")
+        return
+    elif src == 'standard':
         extra_fields=''
         extra_field_ins = """
             'N' AS ln_nonstd_doc_flg,

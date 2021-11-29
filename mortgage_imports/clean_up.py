@@ -3,7 +3,24 @@ import pkg_resources
 
 def clean_up():
     client = cu.make_connection()
+    sql_loc = pkg_resources.resource_filename('mortgage_imports', 'sql/unified') + '/'
+
+    cu.run_query('DROP FUNCTION IF EXISTS serv_mapper', client)
+    cu.run_query(sql_loc + 'serv_function.sql', client, True)
+    
+    cu.run_query('DROP TABLE IF EXISTS unified.serv_map', client)
+    cu.run_query(sql_loc + 'serv_map_ct.sql', client, True)
+    cu.run_query(sql_loc + 'serv_map_ins.sql', client, True)
+
+    cu.run_query('DROP FUNCTION IF EXISTS slr_mapper', client)
+    cu.run_query(sql_loc + 'slr_function.sql', client, True)
+
+    cu.run_query('DROP TABLE IF EXISTS unified.slr_map', client)
+    cu.run_query(sql_loc + 'slr_map_ct.sql', client, True)
+    cu.run_query(sql_loc + 'slr_map_ins.sql', client, True)
+
     sql_loc = pkg_resources.resource_filename('mortgage_imports', 'sql/map') + '/'
+    
     cu.run_query("DROP TABLE IF EXISTS map.zip3_st", client)
     cu.run_query(sql_loc + "zip3_st_ct.sql", client, True)
     cu.run_query(sql_loc + "zip3_st_ins.sql", client, True)
