@@ -30,7 +30,8 @@ SELECT
     a.serv_name_mapped,
     grps.group AS pp_group,
     grps.ppr AS pp_rate,
-    grps.n AS nloans
+    grps.n AS nloans,
+    100 * grps.n / (SELECT count(*) FROM unified.frannie) AS pop_pct
 FROM (
     SELECT
         distinct serv_name,
