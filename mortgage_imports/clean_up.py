@@ -4,6 +4,17 @@ import pkg_resources
 def clean_up():
     client = cu.make_connection()
     sql_loc = pkg_resources.resource_filename('mortgage_imports', 'sql/unified') + '/'
+    
+    cu.run_query('DROP FUNCTION IF EXISTS prop_loc_mapper', client)
+    df = cu.run_query(sql_loc + 'prop_loc_map.sql', client, True, return_df=True)
+    map = ''
+    for j in range(df.shape[0]):
+        msa = df.iloc[j]['prop_msa_cd']
+        st = df.iloc[j]['prop_st']
+        map += "    WHEN msa = '{0}' THEN '{1}' \n".format(msa, st)
+    map += "    WHEN msa = '00000' THEN st"
+    map += '    ELSE msa'
+    cu.run_query(sql_loc + 'prop_loc_function.sql', client, True, replace_dest=[map], replace_source=['<maps>'])
 
     cu.run_query('DROP FUNCTION IF EXISTS serv_mapper', client)
     cu.run_query(sql_loc + 'serv_function.sql', client, True)

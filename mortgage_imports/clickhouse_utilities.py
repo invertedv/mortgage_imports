@@ -16,7 +16,7 @@ def make_connection():
     return client
 
 
-def run_query(query_or_file, client, is_file=False, replace_source=None, replace_dest=None):
+def run_query(query_or_file, client, is_file=False, replace_source=None, replace_dest=None, return_df=False):
     """
     Run a clickhouse query.
 
@@ -44,6 +44,11 @@ def run_query(query_or_file, client, is_file=False, replace_source=None, replace
             query = query.replace(src, replace_dest[j])
     elif replace_source is not None:
         query = query.replace(replace_source, replace_dest)
+
+    if return_df:
+        df = client.query_dataframe(query)
+        return df
+
     client.execute(query)
 
 
