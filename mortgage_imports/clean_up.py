@@ -10,7 +10,6 @@ def clean_up():
 
     cu.run_query(sql_loc + 'fc_data_ct.sql', client, is_file=True)
     cu.run_query(sql_loc + 'fc_data_ins.sql', client, is_file=True)
-    return
 
     cu.run_query('DROP FUNCTION IF EXISTS prop_loc_mapper', client)
     df = cu.run_query(sql_loc + 'prop_loc_map.sql', client, True, return_df=True)
