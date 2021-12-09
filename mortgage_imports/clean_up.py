@@ -4,7 +4,14 @@ import pkg_resources
 def clean_up():
     client = cu.make_connection()
     sql_loc = pkg_resources.resource_filename('mortgage_imports', 'sql/unified') + '/'
-    
+
+    qry = 'DROP TABLE IF EXISTS aux.fc_data'
+    cu.run_query(qry, client)
+
+    cu.run_query(sql_loc + 'fc_data_ct.sql', client, is_file=True)
+    cu.run_query(sql_loc + 'fc_data_ins.sql', client, is_file=True)
+    return
+
     cu.run_query('DROP FUNCTION IF EXISTS prop_loc_mapper', client)
     df = cu.run_query(sql_loc + 'prop_loc_map.sql', client, True, return_df=True)
     map = ''
