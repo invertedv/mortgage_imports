@@ -6,10 +6,13 @@ INSERT INTO rates.monthly
         a.rt_mortarm5 IS NULL ? -99.0 : rt_mortarm5,
 
         b.rt_treas10yr IS NULL ? -99.0 : b.rt_treas10yr,
-        b.rt_libor12mo IS NULL ? -99.0 : b.rt_libor12mo,
+        -99.0,
+        -99.0,
+        -99.0
+/*        b.rt_libor12mo IS NULL ? -99.0 : b.rt_libor12mo,
         b.rt_libor1mo IS NULL ? -99.0 : b.rt_libor1mo,
         b.rt_libor3mo IS NULL ? -99.0 : b.rt_libor3mo
-
+*/
     FROM (
         SELECT
             toStartOfMonth(dt) AS dt,
@@ -32,16 +35,16 @@ INSERT INTO rates.monthly
             toStartOfMonth(dt) AS dt,
 
             SUM(rt_treas10yr_dly) > 0 ?
-              SUM(rt_treas10yr_dly) / SUM(rt_treas10yr_dly > 0 ? 1 : 0) : NULL AS rt_treas10yr,
+              SUM(rt_treas10yr_dly) / SUM(rt_treas10yr_dly > 0 ? 1 : 0) : NULL AS rt_treas10yr
 
-            SUM(rt_libor12mo_dly) > 0 ?
+/*            SUM(rt_libor12mo_dly) > 0 ?
               SUM(rt_libor12mo_dly) / SUM(rt_libor12mo_dly > 0 ? 1 : 0) : NULL AS rt_libor12mo,
 
             SUM(rt_libor1mo_dly) > 0 ?
               SUM(rt_libor1mo_dly) / SUM(rt_libor1mo_dly > 0 ? 1 : 0) : NULL AS rt_libor1mo,
 
             SUM(rt_libor3mo_dly) > 0 ?
-              SUM(rt_libor3mo_dly) / SUM(rt_libor3mo_dly > 0 ? 1 : 0) : NULL AS rt_libor3mo
+              SUM(rt_libor3mo_dly) / SUM(rt_libor3mo_dly > 0 ? 1 : 0) : NULL AS rt_libor3mo*/
 
         FROM
             rates.daily_raw

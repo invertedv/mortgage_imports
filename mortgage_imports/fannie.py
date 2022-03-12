@@ -1,9 +1,18 @@
 import pkg_resources
-import mortgage_imports.clickhouse_utilities as cu
+#import mortgage_imports.clickhouse_utilities as cu
+from muti import chu as cu
 import os
 
-def load_fannie(data_loc: str, src: str, first: bool):
-    client = cu.make_connection()
+def load_fannie(data_loc: str, src: str, first: bool, ip: str, user: str, pw: str):
+    """
+    :param data_loc: directory where the input files reside
+    :param src: either 'harp_map' or 'standard' to select type of files to import
+    :param first: if True, creates a new 'final' table
+    :param ip: IP address of Clickhouse
+    :param user: Clickhouse user name
+    :param pw: Clickhouse password
+    """
+    client = cu.make_connection(host=ip, user=user, password=pw)
     sql_loc = pkg_resources.resource_filename('mortgage_imports', 'sql/fannie') + '/'
     
     # add trailing / if needed
@@ -16,7 +25,8 @@ def load_fannie(data_loc: str, src: str, first: bool):
         # load harp_map table which maps non-harp loans to their harp refis
         cu.run_query("DROP TABLE IF EXISTS fannie.harp_map", client)
         cu.run_query(sql_loc + "harp_map_ct.sql", client, True)
-        cu.import_flat_file("fannie.harp_map", data_loc + "Loan_Mapping.txt", delim=",")
+        cu.import_flat_file("fannie.harp_map", data_loc + "Loan_Mapping.txt",
+                            delim=",", host=ip, user=user, password=pw)
         return
     elif src == 'standard':
         extra_fields=''
@@ -56,7 +66,7 @@ def load_fannie(data_loc: str, src: str, first: bool):
             cu.run_query(sql_loc + "raw_ct.sql", client, True,
                          replace_source=['<extra_fields>'],
                          replace_dest=[extra_fields])
-            cu.import_flat_file("fannie.raw", data_loc + filename)
+            cu.import_flat_file("fannie.raw", data_loc + filename, host=ip, user=user, password=pw)
         
             cu.run_query("DROP TABLE IF EXISTS fannie.trans", client)
             cu.run_query(sql_loc + "transform_ct.sql", client, True)
@@ -72,7 +82,8 @@ def load_fannie(data_loc: str, src: str, first: bool):
         
             cu.run_query("DROP TABLE IF EXISTS fannie.n3sted", client)
             cu.run_query(sql_loc + "nested_ct.sql", client, True)
-            cu.run_query(sql_loc + "nested_ins.sql", client, True, '<src_file>', src_file)
+            cu.run_query(sql_loc + "nested_ins.sql", client, True, replace_source='<src_file>',
+                         replace_dest=src_file)
             cu.run_query("DROP TABLE IF EXISTS fannie.with_hpi", client)
             if first:
                 first = False

@@ -1,5 +1,5 @@
 import pkg_resources
-import mortgage_imports.clickhouse_utilities as cu
+from muti import chu as cu
 """
 Import the FHFA house price indices (HPI).
 
@@ -14,9 +14,15 @@ The following tables are created
 source: fhfa.gov
 """
 
-def load_fhfa(data_loc):
+def load_fhfa(data_loc: str, ip: str, user: str, pw: str):
+    """
+    :param data_loc: directory where the input files reside
+    :param ip: IP address of Clickhouse
+    :param user: Clickhouse user name
+    :param pw: Clickhouse password
+    """
     
-    client = cu.make_connection()
+    client = cu.make_connection(host=ip, user=user, password=pw)
     sql_loc = pkg_resources.resource_filename('mortgage_imports', 'sql/fhfa') + '/'
 
     # add trailing / if needed
@@ -28,12 +34,12 @@ def load_fhfa(data_loc):
     # load the State HPI table
     cu.run_query("DROP TABLE IF EXISTS fhfa.state", client)
     cu.run_query(sql_loc + "state_ct.sql", client, True)
-    cu.import_flat_file("fhfa.state", data_loc + "HPI_AT_state.csv", delim=",")
+    cu.import_flat_file("fhfa.state", data_loc + "HPI_AT_state.csv", delim=",", host=ip, user=user, password=pw)
     
     # load the msad HPI table
     cu.run_query("DROP TABLE IF EXISTS fhfa.msad", client)
     cu.run_query(sql_loc + "msad_ct.sql", client, True)
-    cu.import_flat_file("fhfa.msad", data_loc + "HPI_AT_metro.csv", delim=",")
+    cu.import_flat_file("fhfa.msad", data_loc + "HPI_AT_metro.csv", delim=",", host=ip, user=user, password=pw)
     cu.run_query("ALTER TABLE fhfa.msad UPDATE fhfa_msad = NULL WHERE fhfa_msad = 0", client)
     cu.run_query("ALTER TABLE fhfa.msad UPDATE delta = NULL WHERE delta = 0", client)
 
@@ -45,17 +51,17 @@ def load_fhfa(data_loc):
     # load the 'State but not in MSA' HPI table
     cu.run_query("DROP TABLE IF EXISTS fhfa.state_non_msa", client)
     cu.run_query(sql_loc + "state_non_msa_ct.sql", client, True)
-    cu.import_flat_file("fhfa.state_non_msa", data_loc + "HPI_AT_nonmetro.csv", delim=",")
+    cu.import_flat_file("fhfa.state_non_msa", data_loc + "HPI_AT_nonmetro.csv", delim=",", host=ip, user=user, password=pw)
 
     # load the ZIP-3 HPI table
     cu.run_query("DROP TABLE IF EXISTS fhfa.zip3", client)
     cu.run_query(sql_loc + "zip3_ct.sql", client, True)
-    cu.import_flat_file("fhfa.zip3", data_loc + "HPI_AT_3zip.csv", delim=",")
+    cu.import_flat_file("fhfa.zip3", data_loc + "HPI_AT_3zip.csv", delim=",", host=ip, user=user, password=pw)
     
     # load the usa table
     cu.run_query("DROP TABLE IF EXISTS fhfa.usa", client)
     cu.run_query(sql_loc + "usa_ct.sql", client, True)
-    cu.import_flat_file("fhfa.usa", data_loc + "longer_HPI_EXP_us_nsa.csv", delim=",")
+    cu.import_flat_file("fhfa.usa", data_loc + "longer_HPI_EXP_us_nsa.csv", delim=",", host=ip, user=user, password=pw)
 
     client.disconnect()
 

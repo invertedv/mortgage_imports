@@ -1,8 +1,13 @@
-import mortgage_imports.clickhouse_utilities as cu
+from muti import chu as cu
 import pkg_resources
 
-def clean_up():
-    client = cu.make_connection()
+def clean_up(ip: str, user: str, pw: str):
+    """
+    :param ip: IP address of Clickhouse
+    :param user: Clickhouse user name
+    :param pw: Clickhouse password
+    """
+    client = cu.make_connection(host=ip, user=user, password=pw)
     sql_loc = pkg_resources.resource_filename('mortgage_imports', 'sql/unified') + '/'
 
     qry = 'DROP TABLE IF EXISTS aux.fc_data'

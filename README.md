@@ -80,6 +80,8 @@ Daily rates are:
 
 The data is [here](https://research.stlouisfed.org/useraccount/datalists/257884).
 
+Note: as of 2022, the LIBOR series are not on FRED II. These fields now all have values of -99.
+
 Weekly rates are:
 
 - 15-Year Fixed Rate Mortgage Average in the United States

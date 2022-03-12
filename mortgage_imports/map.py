@@ -1,5 +1,5 @@
 import pkg_resources
-import mortgage_imports.clickhouse_utilities as cu
+from muti import chu as cu
 """
 Import tables that map zip codes to
 
@@ -17,8 +17,14 @@ This depends on the fhfa.msad_map table to determine if a cbsad code is a metro 
 """
 
 
-def load_map(data_loc):
-    client = cu.make_connection()
+def load_map(data_loc, ip: str, user: str, pw: str):
+    """
+    :param data_loc: directory where the input files reside
+    :param ip: IP address of Clickhouse
+    :param user: Clickhouse user name
+    :param pw: Clickhouse password
+    """
+    client = cu.make_connection(host=ip, user=user, password=pw)
     sql_loc = pkg_resources.resource_filename('mortgage_imports', 'sql/map') + '/'
     
     # add trailing / if needed
@@ -30,7 +36,8 @@ def load_map(data_loc):
     # import table that maps from state postal name to fips ID
     cu.run_query("DROP TABLE IF EXISTS map.st_cd_raw", client)
     cu.run_query(sql_loc + "state_cd_raw_ct.sql", client, True)
-    cu.import_flat_file("map.st_cd_raw", data_loc + "state.txt", delim="", format="TabSeparated")
+    cu.import_flat_file("map.st_cd_raw", data_loc + "state.txt", delim="", format="TabSeparated",
+                        host=ip, user=user, password=pw)
     cu.run_query("DROP TABLE IF EXISTS map.st_cd", client)
     cu.run_query(sql_loc + "state_cd_ct.sql", client, True)
     cu.run_query(sql_loc + "state_cd_ins.sql", client, True)
@@ -44,7 +51,8 @@ def load_map(data_loc):
 
     cu.run_query("DROP TABLE IF EXISTS map.zip_cbsa_raw", client)
     cu.run_query(sql_loc + "zip_cbsa_raw_ct.sql", client, True)
-    cu.import_flat_file("map.zip_cbsa_raw", data_loc + "ZIP_CBSA_032021.csv", delim=",")
+    cu.import_flat_file("map.zip_cbsa_raw", data_loc + "ZIP_CBSA_032021.csv", delim=",",
+                        host=ip, user=user, password=pw)
 
     cu.run_query("DROP TABLE IF EXISTS map.zip_cbsa", client)
     cu.run_query(sql_loc + "zip_cbsa_ct.sql", client, True)
@@ -58,7 +66,8 @@ def load_map(data_loc):
     # Note, the file has only zips within divisions, so we have to join to the msa table to get a global table
     cu.run_query("DROP TABLE IF EXISTS map.zip_cbsad_raw", client)
     cu.run_query(sql_loc + "zip_cbsad_raw_ct.sql", client, True)
-    cu.import_flat_file("map.zip_cbsad_raw", data_loc + "ZIP_CBSA_DIV_032021.csv", delim=",")
+    cu.import_flat_file("map.zip_cbsad_raw", data_loc + "ZIP_CBSA_DIV_032021.csv", delim=",",
+                        host=ip, user=user, password=pw)
 
     cu.run_query("DROP TABLE IF EXISTS map.zip_cbsad", client)
     cu.run_query(sql_loc + "zip_cbsad_ct.sql", client, True)
@@ -72,7 +81,8 @@ def load_map(data_loc):
     # DECR by this value -- so picking array element 1 will give the county with the highest proportion of residences
     cu.run_query("DROP TABLE IF EXISTS map.zip_cty_raw", client)
     cu.run_query(sql_loc + "zip_cty_raw_ct.sql", client, True)
-    cu.import_flat_file("map.zip_cty_raw", data_loc + "ZIP_COUNTY_122020.csv", delim=",")
+    cu.import_flat_file("map.zip_cty_raw", data_loc + "ZIP_COUNTY_122020.csv", delim=",",
+                        host=ip, user=user, password=pw)
 
     cu.run_query("DROP TABLE IF EXISTS map.zip_cty", client)
     cu.run_query(sql_loc + "zip_cty_ct.sql", client, True)

@@ -6,7 +6,7 @@ setup(
     version='1.0',
     packages=['mortgage_imports'],
     url='',
-    install_requires=['clickhouse-driver', 'numpy', 'pandas', 'setuptools_scm'],
+    install_requires=['clickhouse-driver', 'numpy', 'pandas', 'setuptools_scm', 'muti'],
     package_data={'mortgage_imports': ['sql/*']},
     include_package_data = True,
     use_scm_version=True,

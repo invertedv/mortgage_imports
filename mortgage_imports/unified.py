@@ -2,11 +2,16 @@
  Build unified databaase of Freddie/Fannie loans
 """
 import pkg_resources
-import mortgage_imports.clickhouse_utilities as cu
+from muti import chu as cu
 
-def unify():
+def unify(ip: str, user: str, pw: str):
+    """
+    :param ip: IP address of Clickhouse
+    :param user: Clickhouse user name
+    :param pw: Clickhouse password
+    """
 
-    client = cu.make_connection()
+    client = cu.make_connection(host=ip, user=user, password=pw)
     sql_loc = pkg_resources.resource_filename('mortgage_imports', 'sql/unified') + '/'
     
     cu.run_query("CREATE DATABASE IF NOT EXISTS unified", client)
@@ -16,9 +21,9 @@ def unify():
     cu.run_query(sql_loc + "unified_ins.sql", client, True)
     client.disconnect()
 
-def backup(table, backup_table):
+def backup(table, backup_table, ip: str, user: str, pw: str):
     from muti import chu
-    client = chu.make_connection()
+    client = chu.make_connection(host=ip, user=user, password=pw)
     qry = 'SHOW CREATE TABLE unified.{0}'.format(table)
     stmt = chu.run_query(qry, client, return_df=True).iloc[0]['statement']
     

@@ -1,10 +1,17 @@
 import pkg_resources
-import mortgage_imports.clickhouse_utilities as cu
+from muti import chu as cu
 import os
 
-def load_freddie(data_loc, build_final):
+def load_freddie(data_loc, build_final, ip: str, user: str, pw: str):
+    """
+    :param data_loc: directory where the input files reside
+    :param build_final: if this is False, creates new, empty n3sted table
+    :param ip: IP address of Clickhouse
+    :param user: Clickhouse user name
+    :param pw: Clickhouse password
+    """
 
-    client = cu.make_connection()
+    client = cu.make_connection(host=ip, user=user, password=pw)
     sql_loc = pkg_resources.resource_filename('mortgage_imports', 'sql/freddie') + '/'
     
     # add trailing / if needed
@@ -37,11 +44,13 @@ def load_freddie(data_loc, build_final):
     
             cu.run_query("DROP TABLE IF EXISTS freddie.raw_perf", client)
             cu.run_query(sql_loc + "raw_perf_ct.sql", client, True)
-            cu.import_flat_file("freddie.raw_perf", data_loc + perf_file, options='--input_format_allow_errors_num=20')
+            cu.import_flat_file("freddie.raw_perf", data_loc + perf_file, options='--input_format_allow_errors_num=20',
+                                host=ip, user=user, password=pw)
 
             cu.run_query("DROP TABLE IF EXISTS freddie.raw_orig", client)
             cu.run_query(sql_loc + "raw_orig_ct.sql", client, True)
-            cu.import_flat_file("freddie.raw_orig", data_loc + filename,  options='--input_format_allow_errors_num=20')
+            cu.import_flat_file("freddie.raw_orig", data_loc + filename,  options='--input_format_allow_errors_num=20',
+                                host=ip, user=user, password=pw)
             
             cu.run_query("DROP TABLE IF EXISTS freddie.trans", client)
             cu.run_query(sql_loc + "transform_ct.sql", client, True)
@@ -55,7 +64,7 @@ def load_freddie(data_loc, build_final):
             cu.run_query("DROP TABLE IF EXISTS freddie.trans", client)
 
             src_file = filename[0:filename.find(".")]
-            cu.run_query(sql_loc + "nested_ins.sql", client, True, "XXXXXX", src_file)
+            cu.run_query(sql_loc + "nested_ins.sql", client, True, replace_source="XXXXXX", replace_dest=src_file)
 
             print('done: {0}'.format(filename))
             fn += 1
